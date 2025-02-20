@@ -10,11 +10,11 @@
     <!-- Filters Section -->
     <div class="row mb-4 flex flex-col items-center space-y-4 md:flex-row md:justify-center md:space-x-4 md:space-y-0 mb-8">
       <InputText v-model="searchQuery" placeholder="Search courses..." class="p-inputtext-lg w-64" />
-      <Select v-model="selectedMajor" :options="majors" optionLabel="name" optionValue="_id"
+      <Select v-model="selectedMajor" :options="majors" optionLabel="name" optionValue="_id" filter
         placeholder="Filter by Major" class="p-dropdown w-64" />
-      <Select v-model="selectedCompany" :options="companies" optionLabel="name" optionValue="_id"
+      <Select v-model="selectedCompany" :options="companies" optionLabel="name" optionValue="_id" filter
         placeholder="Filter by Company" class="p-dropdown w-64" />
-      <Select v-model="selectedTrack" :options="tracks" optionLabel="name" optionValue="_id"
+      <Select v-model="selectedTrack" :options="tracks" optionLabel="name" optionValue="_id" filter
         placeholder="Filter by Track" class="p-dropdown w-64" />
       <Button label="Reset" icon="pi pi-refresh" class="p-button-danger w-32" @click="resetFilters" />
     </div>

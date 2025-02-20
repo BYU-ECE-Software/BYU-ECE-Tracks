@@ -822,7 +822,7 @@ fetchCourses();
       </template>
     </Dialog>
 
-    <Dialog v-model:visible="trackDialog" :style="{ width: '600px' }" header="Add New Track" :modal="true">
+    <Dialog v-model:visible="trackDialog" :style="{ width: '800px' }" header="Add New Track" :modal="true">
       <div class="flex flex-col gap-6 p-4">
 
         <!-- Track Name -->
@@ -895,3 +895,20 @@ fetchCourses();
 
   </div>
 </template>
+
+<style scoped>
+.p-multiselect {
+  max-width: 100%; /* Ensures it doesn’t overflow */
+}
+
+.p-multiselect .p-multiselect-label {
+  white-space: normal !important; /* Allows text to wrap */
+  display: flex;
+  flex-wrap: wrap; /* Enables wrapping */
+  min-height: 2.5rem; /* Adjust height as needed */
+  max-height: 300px; /* Set a max height */
+  overflow-y: auto; /* Allows vertical scrolling if needed */
+}
+
+
+</style>

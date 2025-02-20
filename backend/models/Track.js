@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const TrackSchema = new mongoose.Schema({
-  name: String,
+  name: {type: String, required: true, unique: true, trim: true},
   description: String,
   imageUrl: String,
   primaryCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],

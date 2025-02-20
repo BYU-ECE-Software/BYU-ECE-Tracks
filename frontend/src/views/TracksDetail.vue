@@ -2,9 +2,11 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
   <div class="p-8 max-w-7xl mx-auto">
     <!-- Centered Title -->
-    <h1 class="text-5xl font-bold text-center mb-10">Companies</h1>
+    <h1 class="text-5xl font-bold text-center mb-10">{{ track.name }}</h1>
+    <br>
 
     <!-- Grid Layout for Companies -->
+    <h2 class="text-5xl font-bold text-center mb-10">Companies</h2>
     <div v-if="track.companies.length" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       <Card v-for="companyId in track.companies" :key="companyId" class="track-card">
         <template #content>
@@ -19,7 +21,7 @@
     </div>
 
     <!-- Centered Title -->
-    <h1 class="text-5xl font-bold text-center mb-10">Primary Courses</h1>
+    <h2 class="text-5xl font-bold text-center mb-10">Primary Courses</h2>
 
     <!-- Grid Layout for Companies -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
@@ -36,7 +38,7 @@
     </div>
 
     <!-- Centered Title -->
-    <h1 class="text-5xl font-bold text-center mb-10">Optional Courses</h1>
+    <h2 class="text-5xl font-bold text-center mb-10">Optional Courses</h2>
 
     <!-- Grid Layout for Companies -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

@@ -6,10 +6,10 @@
 
         <!-- Filters Section -->
     <div class="row mb-4 flex flex-col items-center space-y-4 md:flex-row md:justify-center md:space-x-4 md:space-y-0 mb-8">
-      <InputText v-model="searchQuery" placeholder="Search courses..." class="p-inputtext-lg w-64" />
-      <Select v-model="selectedFavoriteCourse" :options="courses" optionLabel="name" optionValue="_id"
+      <InputText v-model="searchQuery" placeholder="Search tracks..." class="p-inputtext-lg w-64" />
+      <Select v-model="selectedFavoriteCourse" :options="courses" optionLabel="name" optionValue="_id" filter
         placeholder="Filter by Favorite Course" class="p-dropdown w-64" />
-      <Select v-model="selectedCompany" :options="companies" optionLabel="name" optionValue="_id"
+      <Select v-model="selectedCompany" :options="companies" optionLabel="name" optionValue="_id" filter
         placeholder="Filter by Company" class="p-dropdown w-64" />
       <Button label="Reset" icon="pi pi-refresh" class="p-button-danger w-32" @click="resetFilters" />
     </div>
@@ -77,7 +77,7 @@ const filteredTracks = computed(() => {
   return tracks.value.filter((track) => {
     return (
       track.name.toLowerCase().includes(searchQuery.value.toLowerCase()) &&
-      (!selectedFavoriteCourse.value || track.primaryCourse.includes(selectedFavoriteCourse.value) || track.optionalCourse.includes(selectedFavoriteCourse.value)) &&
+      (!selectedFavoriteCourse.value || track.primaryCourses.includes(selectedFavoriteCourse.value) || track.optionalCourses.includes(selectedFavoriteCourse.value)) &&
       (!selectedCompany.value || track.companies.includes(selectedCompany.value))
     );
   });

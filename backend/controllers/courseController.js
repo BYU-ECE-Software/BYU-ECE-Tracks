@@ -3,12 +3,6 @@ const Course = require("../models/Course");
 exports.getCourses = async (req, res) => {
   try {
     const courses = await Course.find()
-      .populate("majors", "_id name")
-      .populate("skills", "_id name")
-      .populate("companies", "_id name")
-      .populate("tracks", "_id name")
-      .populate("relatedCourses", "_id name");
-
     res.json(courses);
   }
   catch (error) {
@@ -19,11 +13,6 @@ exports.getCourses = async (req, res) => {
 exports.getCourse = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id)
-      .populate("majors", "_id name")
-      .populate("skills", "_id name")
-      .populate("companies", "_id name")
-      .populate("tracks", "_id name")
-      .populate("relatedCourses", "_id name");
     res.json(course);
   }
   catch (error) {

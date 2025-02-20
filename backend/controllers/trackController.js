@@ -3,9 +3,6 @@ const Track = require("../models/Track");
 exports.getTracks = async (req, res) => {
   try {
     const tracks = await Track.find()
-      .populate("companies", "_id name")
-      .populate("optionalCourses", "_id name")
-      .populate("primaryCourses", "_id name");
     res.json(tracks);
   }
   catch (error) {
@@ -17,9 +14,6 @@ exports.getTracks = async (req, res) => {
 exports.getTrack = async (req, res) => {
   try {
     const track = await Track.findById(req.params.id)
-      .populate("companies", "_id name")
-      .populate("optionalCourses", "_id name")
-      .populate("primaryCourses", "_id name");
     res.json(track);
   }
   catch (error) {
