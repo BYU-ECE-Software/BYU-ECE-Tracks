@@ -99,6 +99,7 @@ Please reference (and conform to) BYU Web design style guides as found [here](ht
 - Fix Course Catalog display cards
 - Ensure mobile friendliness
 - link courses to BYU page perhaps
+- Add section for "Favorite courses from Core" to add to favorite classes filter
 
 
 ## Screenshots
