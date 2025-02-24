@@ -143,7 +143,7 @@ const addMajor = async () => {
   if (!newMajor.value.trim()) return;
 
   try {
-    await axios.post('http://localhost:5000/majors', { name: newMajor.value });
+    //await axios.post('http://localhost:5000/majors', { name: newMajor.value }); remove for UI beta
     fetchMajors();
     newMajor.value = ''; // Clear input
   } catch (error) {
@@ -153,7 +153,7 @@ const addMajor = async () => {
 
 const removeMajor = async (id) => {
   try {
-    await axios.delete(`http://localhost:5000/majors/${id}`);
+    //await axios.delete(`http://localhost:5000/majors/${id}`); //remove for ui beta
     fetchMajors();
   } catch (error) {
     console.error("Error deleting major:", error);
@@ -175,7 +175,7 @@ const addSkill = async () => {
   if (!newSkill.value.trim()) return;
 
   try {
-    await axios.post('http://localhost:5000/skills', { name: newSkill.value });
+    //await axios.post('http://localhost:5000/skills', { name: newSkill.value }); remove for UI beta
     fetchSkills();
     newSkill.value = ''; // Clear input
   } catch (error) {
@@ -186,11 +186,10 @@ const addSkill = async () => {
 const removeSkill = async (id) => {
   console.log("Deleting skill with ID: ", id)
   try {
-    const response = await axios.delete(`http://localhost:5000/skills/${id}`);
-    if (response.status == 200) {
-      console.log("Success!");
+    //const response = await axios.delete(`http://localhost:5000/skills/${id}`); //remove for ui beta
+    //if (response.status == 200) {
       fetchSkills();
-    }
+    //}
   } catch (error) {
     console.error("Error deleting skill:", error);
   }
@@ -211,7 +210,7 @@ const addCompany = async () => {
   if (!newCompany.value.trim()) return;
 
   try {
-    await axios.post('http://localhost:5000/companies', { name: newCompany.value });
+    //await axios.post('http://localhost:5000/companies', { name: newCompany.value }); //Removed for beta UI test
     fetchCompanies();
     newCompany.value = ''; // Clear input
   } catch (error) {
@@ -221,7 +220,7 @@ const addCompany = async () => {
 
 const removeCompany = async (id) => {
   try {
-    await axios.delete(`http://localhost:5000/companies/${id}`);
+    //await axios.delete(`http://localhost:5000/companies/${id}`); remove from ui beta test
     fetchCompanies();
   } catch (error) {
     console.error("Error deleting company:", error);
@@ -241,23 +240,9 @@ const fetchTracks = async () => {
   }
 };
 
-const addTrack = async () => {
-  trackSubmitted.value = true;
-  if (!track.value.name.trim()) return;
-
-  try {
-    await axios.post("http://localhost:5000/tracks", track.value);
-    fetchTracks();
-    trackDialog.value = false; //Close modal
-    track.value = { name: "", description: "", imageUrl: "", primaryCourses: [], optionalCourses: [], companies: [] };
-  } catch (error) {
-    console.error("Error adding track:", error);
-  }
-};
-
 const removeTrack = async (selected) => {
   try {
-    await axios.delete(`http://localhost:5000/tracks/${selected._id}`);
+    //await axios.delete(`http://localhost:5000/tracks/${selected._id}`); //remove for UI beta
     fetchTracks();
   } catch (error) {
     console.error("Error deleting track:", error);
@@ -337,11 +322,11 @@ const saveCourse = async () => {
 
     // FIXED: Check `updatedCourse.id`, not `updatedCourse.value.id`
     if (updatedCourse._id != null) {
-      await axios.put(`http://localhost:5000/courses/${updatedCourse._id}`, updatedCourse);
+      //await axios.put(`http://localhost:5000/courses/${updatedCourse._id}`, updatedCourse); //remove for UI beta
       // toast.add({ severity: 'success', summary: 'Success', detail: 'Course updated', life: 3000 });
     } else {
       // FIXED: Should use `updatedCourse`, not `updateCourse.value`
-      await axios.post("http://localhost:5000/courses", updatedCourse);
+      //await axios.post("http://localhost:5000/courses", updatedCourse); remove for ui beta
       // toast.add({ severity: 'success', summary: 'Success', detail: 'Course added', life: 3000 });
     }
 
@@ -428,11 +413,11 @@ const saveTrack = async () => {
 
     // FIXED: Check `updatedCourse.id`, not `updatedCourse.value.id`
     if (updatedTrack._id != null) {
-      await axios.put(`http://localhost:5000/tracks/${updatedTrack._id}`, updatedTrack);
+      //await axios.put(`http://localhost:5000/tracks/${updatedTrack._id}`, updatedTrack); //remove for UI beta
       // toast.add({ severity: 'success', summary: 'Success', detail: 'Course updated', life: 3000 });
     } else {
       // FIXED: Should use `updatedCourse`, not `updateCourse.value`
-      await axios.post("http://localhost:5000/tracks", updatedTrack);
+      //await axios.post("http://localhost:5000/tracks", updatedTrack); remove for UI beta
       // toast.add({ severity: 'success', summary: 'Success', detail: 'Course added', life: 3000 });
     }
 
@@ -475,7 +460,7 @@ const editTrack = (selected) => {
 // Delete confirmation
 const confirmDeleteCourse = async (selected) => {
   try {
-    await axios.delete(`http://localhost:5000/courses/${selected._id}`);
+    //await axios.delete(`http://localhost:5000/courses/${selected._id}`); remove from ui beta
     // toast.add({ severity: 'warn', summary: 'Deleted', detail: 'Course removed', life: 3000 });
     fetchCourses();
   } catch (error) {
