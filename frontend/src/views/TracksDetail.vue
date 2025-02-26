@@ -1,19 +1,18 @@
 <template>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <div class="p-8 max-w-7xl mx-auto">
+  <div class="mx-auto px-6 py-8">
     <!-- Centered Title -->
-    <h1 class="text-5xl font-bold text-center mb-10">{{ track.name }}</h1>
+    <h1 class="text-5xl font-bold text-center mb-10 py-12">{{ track.name }}</h1>
     <br>
 
     <!-- Grid Layout for Companies -->
-    <h2 class="text-5xl font-bold text-center mb-10">Companies</h2>
-    <div v-if="track.companies.length" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <h2 class="text-5xl font-bold text-center mb-10 py-8">Companies</h2>
+    <div v-if="track.companies.length" class="place-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-32">
       <Card v-for="companyId in track.companies" :key="companyId" class="track-card">
         <template #content>
           <div class="flex flex-col items-center">
             <div class="p-4 text-center">
               <!-- Track Name -->
-              <h3 class="text-xl font-bold text-gray-800">{{ getCompanyName(companyId) }}</h3>
+              <h3 class="text-xl font-bold">{{ getCompanyName(companyId) }}</h3>
             </div>
           </div>
         </template>
@@ -21,16 +20,16 @@
     </div>
 
     <!-- Centered Title -->
-    <h2 class="text-5xl font-bold text-center mb-10">Primary Courses</h2>
+    <h2 class="text-5xl font-bold text-center mb-10 py-8">Primary Courses</h2>
 
     <!-- Grid Layout for Companies -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
+    <div class="place-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-32">
       <Card v-for="courseId in track.primaryCourses" :key="courseId" class="track-card">
         <template #content>
           <div class="flex flex-col items-center">
             <div class="p-4 text-center">
               <!-- Track Name -->
-              <h3 class="text-xl font-bold text-gray-800">{{ getCourseName(courseId) }}</h3>
+              <h3 class="text-xl font-bold">{{ getCourseName(courseId) }}</h3>
             </div>
           </div>
         </template>
@@ -38,16 +37,16 @@
     </div>
 
     <!-- Centered Title -->
-    <h2 class="text-5xl font-bold text-center mb-10">Optional Courses</h2>
+    <h2 class="text-5xl font-bold text-center mb-10 py-8">Optional Courses</h2>
 
     <!-- Grid Layout for Companies -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div class="place-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-32">
       <Card v-for="courseId in track.optionalCourses" :key="courseId" class="track-card">
         <template #content>
           <div class="flex flex-col items-center">
             <div class="p-4 text-center">
               <!-- Track Name -->
-              <h3 class="text-xl font-bold text-gray-800">{{ getCourseName(courseId) }}</h3>
+              <h3 class="text-xl font-bold">{{ getCourseName(courseId) }}</h3>
             </div>
           </div>
         </template>
@@ -62,7 +61,7 @@
 
 .track-card {
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
   border-radius: 8px;
   overflow: hidden;
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;

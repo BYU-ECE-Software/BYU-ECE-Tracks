@@ -6,6 +6,8 @@ import PrimeVue from 'primevue/config';
 import 'primeicons/primeicons.css'; // Icons
 import Lara from '@primevue/themes/lara';
 
+import './assets/main.css'
+
 const app = createApp(App);
 
 app.use(router)

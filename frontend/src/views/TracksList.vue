@@ -1,11 +1,11 @@
 <template>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <div class="p-8 max-w-7xl mx-auto">
-        <!-- Centered Title -->
-        <h1 class="text-5xl font-bold text-center mb-10">Tracks</h1>
 
-        <!-- Filters Section -->
-    <div class="row mb-4 flex flex-col items-center space-y-4 md:flex-row md:justify-center md:space-x-4 md:space-y-0 mb-8">
+  <div class="mx-auto px-6 py-8">
+    <h1 class="text-5xl font-bold text-center mb-10 py-12">Tracks</h1>
+
+    <!-- Filters Section -->
+    <div
+      class="row flex flex-col items-center space-y-4 md:flex-row md:justify-center md:space-x-4 md:space-y-0 mb-8">
       <InputText v-model="searchQuery" placeholder="Search tracks..." class="p-inputtext-lg w-64" />
       <Select v-model="selectedFavoriteCourse" :options="courses" optionLabel="name" optionValue="_id" filter
         placeholder="Filter by Favorite Course" class="p-dropdown w-64" />
@@ -14,26 +14,26 @@
       <Button label="Reset" icon="pi pi-refresh" class="p-button-danger w-32" @click="resetFilters" />
     </div>
 
-        <!-- Grid Layout for Tracks -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            <Card v-for="track in paginatedTracks" :key="track._id" class="track-card" @click="viewTrack(track)">
-                <template #content>
-                    <div class="flex flex-col items-center">
-                        <!-- Track Image -->
-                        <img v-if="track.imageUrl" :src="track.imageUrl" :alt="track.name" class="track-image" />
-                        <div class="p-4 text-center">
-                            <!-- Track Name -->
-                            <h3 class="text-xl font-bold text-gray-800">{{ track.name }}</h3>
-                            <!-- Track Description -->
-                            <p class="text-sm text-gray-600 mt-2">{{ track.description }}</p>
-                        </div>
-                    </div>
-                </template>
-            </Card>
-        </div>
-        <!-- Pagination -->
-    <Paginator :rows="rowsPerPage" :totalRecords="filteredTracks.length" @page="onPageChange" class="mt-8" />
+    <!-- Grid Layout for Tracks -->
+    <div class="place-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-32">
+      <Card v-for="track in paginatedTracks" :key="track._id" class="track-card" @click="viewTrack(track)">
+        <template #content>
+          <div class="flex flex-col items-center">
+            <!-- Track Image -->
+            <img v-if="track.imageUrl" :src="track.imageUrl" :alt="track.name" class="track-image" />
+            <div class="p-4 text-center">
+              <!-- Track Name -->
+              <h3 class="text-xl font-bold py-1">{{ track.name }}</h3>
+              <!-- Track Description -->
+              <p class="text-sm mt-2">{{ track.description }}</p>
+            </div>
+          </div>
+        </template>
+      </Card>
     </div>
+    <!-- Pagination -->
+    <Paginator :rows="rowsPerPage" :totalRecords="filteredTracks.length" @page="onPageChange" class="mt-8" />
+  </div>
 </template>
 
 <script setup>
@@ -44,7 +44,8 @@ import { useRouter } from "vue-router";
 import InputText from "primevue/inputtext";
 import Paginator from "primevue/paginator";
 import Select from "primevue/select"
-import {Button} from "primevue";
+import { Button } from "primevue";
+import HeaderBar from "@/components/HeaderBar.vue";
 
 const router = useRouter();
 const courses = ref([]);
@@ -111,23 +112,58 @@ onMounted(fetchTracks);
 @import "tailwindcss";
 
 .track-card {
-    width: 100%;
-    max-width: 400px;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  width: 100%;
+  max-width: 450px;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .track-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .track-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
+
+:deep(.p-paginator){
+  border-radius: 8px;
+  padding: 20px;
+}
+
+/* Style the buttons */
+:deep(.p-paginator .p-paginator-pages .p-paginator-page) {
+  background-color: white;
+  color: var(--byu-royal); /* Your theme blue */
+  border-radius: 6px;
+  margin: 0 3px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover effect */
+:deep(.p-paginator .p-paginator-pages .p-paginator-page:hover) {
+  background-color: var(--byu-medgray); /* Light blue */
+}
+
+/* Next & Previous buttons */
+:deep(.p-paginator .p-paginator-next, .p-paginator .p-paginator-prev) {
+  color: var(--byu-royal);
+  font-size: 1.2rem;
+}
+
+:deep(.p-paginator .p-paginator-next:hover, .p-paginator .p-paginator-prev:hover) {
+  color: var(--byu-medgray);
+}
+
+/* Disabled buttons */
+:deep(.p-paginator .p-disabled) {
+  opacity: 0.5;
+}
+
 </style>

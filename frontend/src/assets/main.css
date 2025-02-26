@@ -1,19 +1,53 @@
 @import './base.css';
+@import 'tailwindcss';
 
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  /* max-width: 1280px; */
+  margin: 0;
+  padding: 0;
   font-weight: normal;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-a,
-.green {
+a.blue {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
+  color: var(--byu-royal);
   transition: 0.4s;
   padding: 3px;
+}
+
+a.white{
+  text-decoration: none;
+  color: white;
+  transition: 0.4s;
+  padding: 3px;
+}
+
+a.white:hover{
+  text-decoration: underline;
+}
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 200rem;
+  /* Adjust as needed */
+  width: 100%;
+  margin: 0 0;
+  /* Centers the content */
+  padding: 0 0;
+  place-items: top;
+  /* Adds left/right padding */
 }
 
 @media (hover: hover) {
@@ -24,13 +58,31 @@ a,
 
 @media (min-width: 1024px) {
   body {
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
     display: flex;
-    place-items: center;
+    flex-direction: column;
   }
 
   #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    /* display: grid; */
+    /* grid-template-columns: 1fr; */
+    /* padding: 0 2rem; */
+    margin: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1, h2, h3 {
+    font-family: 'HCo Ringside Narrow SSm', 'Open Sans', Helvetica, Arial, sans-serif;
+    color: var(--byu-navy);
+  }
+  
+  p {
+    font-family: 'Public Sans', 'Noto Sans', 'Open Sans', Helvetica, Arial, sans-serif;
+    color: var(--byu-navy);
   }
 }

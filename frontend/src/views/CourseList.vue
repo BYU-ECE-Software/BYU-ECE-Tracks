@@ -1,15 +1,11 @@
 <template>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <div class="course-container p-6">
-    <!-- Page Header -->
-    <div class="text-center mb-10">
-      <h2 class="text-4xl font-bold">ECEn/ITC Course Catalog</h2>
-      <span class="text-lg text-gray-600">Explore courses that match your tracks and career goals.</span>
-    </div>
+  <div class="mx-auto px-6 py-8">
+    <h1 class="text-5xl font-bold text-center mb-10 py-12">ECE/ITC Course Catalog</h1>
+      <h2 class="text-lg">Explore courses that match your tracks and career goals.</h2>
 
     <!-- Filters Section -->
-    <div class="row mb-4 flex flex-col items-center space-y-4 md:flex-row md:justify-center md:space-x-4 md:space-y-0 mb-8">
-      <InputText v-model="searchQuery" placeholder="Search courses..." class="p-inputtext-lg w-64" />
+    <div class="row flex flex-col items-center space-y-4 md:flex-row md:justify-center md:space-x-4 md:space-y-0 mb-8">
+      <InputText v-model="searchQuery" placeholder="Search courses..." class="p-inputtext-lg w-64 px-2" />
       <Select v-model="selectedMajor" :options="majors" optionLabel="name" optionValue="_id" filter
         placeholder="Filter by Major" class="p-dropdown w-64" />
       <Select v-model="selectedCompany" :options="companies" optionLabel="name" optionValue="_id" filter
@@ -20,7 +16,7 @@
     </div>
 
     <!-- Course Cards Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
+    <div class="place-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-32">
       <Card v-for="course in paginatedCourses" :key="course._id" class="course-card" @click="viewCourse(course)">
         <template #content>
           <div class="flex flex-col items-center">
