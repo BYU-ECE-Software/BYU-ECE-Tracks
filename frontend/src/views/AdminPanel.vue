@@ -482,7 +482,7 @@ fetchCourses();
 <template>
   <div>
     <!--Navbar-->
-    <TabMenu :model="tabs" />
+    <TabMenu class="px-4" :model="tabs" />
 
     <div v-if="activeTab === 'courses'">
       <div class="card">
@@ -498,7 +498,7 @@ fetchCourses();
           </template> -->
         </Toolbar>
 
-        <DataTable ref="dt" v-model:selection="selectedCourses" :value="coursesList" dataKey="id" :paginator="true"
+        <DataTable class="px-4" ref="dt" v-model:selection="selectedCourses" :value="coursesList" dataKey="id" :paginator="true"
           :rows="10" :filters="filters"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 25]"
@@ -515,7 +515,7 @@ fetchCourses();
             </div>
           </template>
 
-          <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
+          <!-- <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column> -->
           <Column field="name" header="Course Name" sortable style="min-width: 16rem"></Column>
           <Column field="majors" header="Majors" sortable style="min-width: 16rem">
             <template #body="slotProps">
@@ -588,7 +588,7 @@ fetchCourses();
         </template>
       </Card>
 
-      <h4 class="mb-3">Existing Majors</h4>
+      <h4 class="mb-3 py-2">Existing Majors</h4>
       <DataTable :value="majorsList" class="p-datatable-sm" stripedRows responsiveLayout="scroll">
         <Column field="name" header="Major Name" class="p-text-lg"></Column>
 
@@ -617,7 +617,7 @@ fetchCourses();
         </template>
       </Card>
 
-      <h4 class="mb-3">Existing Skills</h4>
+      <h4 class="mb-3 py-2">Existing Skills</h4>
       <DataTable :value="skillsList" class="p-datatable-sm" stripedRows responsiveLayout="scroll">
         <Column field="name" header="Skill Name" class="p-text-lg"></Column>
 
@@ -645,7 +645,7 @@ fetchCourses();
         </template>
       </Card>
 
-      <h4 class="mb-3">Existing Companies</h4>
+      <h4 class="mb-3 py-2">Existing Companies</h4>
       <DataTable :value="companiesList" class="p-datatable-sm" stripedRows responsiveLayout="scroll">
         <Column field="name" header="Company Name" class="p-text-lg"></Column>
 
@@ -894,6 +894,5 @@ fetchCourses();
   max-height: 300px; /* Set a max height */
   overflow-y: auto; /* Allows vertical scrolling if needed */
 }
-
 
 </style>

@@ -74,16 +74,24 @@
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-height: 80vh;
 }
 
-.back-button {
+.back-button{
   margin-bottom: 15px;
+  background-color: var(--byu-royal);
+  border-color: var(--byu-royal);
+}
+
+button.back-button:hover{
+  background-color: white;
+  color: var(--byu-navy);
+  border-color: var(--byu-navy);
 }
 
 .course-title {
   font-size: 2rem;
   font-weight: bold;
-  color: #2c3e50;
   text-align: center;
 }
 
@@ -104,7 +112,7 @@
 
 .course-description {
   font-size: 1.1rem;
-  color: #34495e;
+  color: var(--byu-navy);
   text-align: center;
   margin-bottom: 20px;
 }
@@ -128,7 +136,7 @@
 }
 
 .tag {
-  background: #3498db;
+  background: var(--byu-royal);
   color: white;
   padding: 8px 12px;
   border-radius: 20px;
@@ -166,6 +174,10 @@
   text-align: center;
   font-size: 1.2rem;
   color: #777;
+}
+
+h4{
+  color: var(--byu-navy);
 }
 </style>
 

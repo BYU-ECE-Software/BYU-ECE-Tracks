@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto px-6 py-8">
     <h1 class="text-5xl font-bold text-center mb-10 py-12">ECE/ITC Course Catalog</h1>
-      <h2 class="text-lg">Explore courses that match your tracks and career goals.</h2>
+      <h2 class="text-center text-lg py-2">Explore courses that match your tracks and career goals.</h2>
 
     <!-- Filters Section -->
     <div class="row flex flex-col items-center space-y-4 md:flex-row md:justify-center md:space-x-4 md:space-y-0 mb-8">
@@ -55,7 +55,7 @@ const selectedCompany = ref(null);
 const selectedTrack = ref(null);
 
 const router = useRouter();
-const rowsPerPage = ref(6);
+const rowsPerPage = ref(12);
 const currentPage = ref(0);
 
 const fetchCourses = async () => {
