@@ -20,6 +20,9 @@ import CourseList from './CourseList.vue';
 
 // const toast = useToast();
 
+//Boo we hate global variables
+const editable = false;
+
 const activeTab = ref('courses');
 const tabs = ref([
   { label: 'Courses', command: () => (activeTab.value = 'courses') },
@@ -143,7 +146,9 @@ const addMajor = async () => {
   if (!newMajor.value.trim()) return;
 
   try {
-    //await axios.post('http://localhost:5000/majors', { name: newMajor.value }); remove for UI beta
+    if (editable) {
+      await axios.post('http://localhost:5000/majors', { name: newMajor.value }); //remove for UI beta
+    }
     fetchMajors();
     newMajor.value = ''; // Clear input
   } catch (error) {
@@ -153,7 +158,9 @@ const addMajor = async () => {
 
 const removeMajor = async (id) => {
   try {
-    //await axios.delete(`http://localhost:5000/majors/${id}`); //remove for ui beta
+    if (editable) {
+      await axios.delete(`http://localhost:5000/majors/${id}`); //remove for ui beta
+    }
     fetchMajors();
   } catch (error) {
     console.error("Error deleting major:", error);
@@ -175,7 +182,9 @@ const addSkill = async () => {
   if (!newSkill.value.trim()) return;
 
   try {
-    //await axios.post('http://localhost:5000/skills', { name: newSkill.value }); remove for UI beta
+    if (editable) {
+      await axios.post('http://localhost:5000/skills', { name: newSkill.value }); //remove for UI beta
+    }
     fetchSkills();
     newSkill.value = ''; // Clear input
   } catch (error) {
@@ -186,9 +195,11 @@ const addSkill = async () => {
 const removeSkill = async (id) => {
   console.log("Deleting skill with ID: ", id)
   try {
-    //const response = await axios.delete(`http://localhost:5000/skills/${id}`); //remove for ui beta
-    //if (response.status == 200) {
-      fetchSkills();
+    if (editable) {
+      const response = await axios.delete(`http://localhost:5000/skills/${id}`); //remove for ui beta
+    }
+    // if (response.status == 200) {
+    fetchSkills();
     //}
   } catch (error) {
     console.error("Error deleting skill:", error);
@@ -210,7 +221,9 @@ const addCompany = async () => {
   if (!newCompany.value.trim()) return;
 
   try {
-    //await axios.post('http://localhost:5000/companies', { name: newCompany.value }); //Removed for beta UI test
+    if (editable) {
+      await axios.post('http://localhost:5000/companies', { name: newCompany.value }); //Removed for beta UI test
+    }
     fetchCompanies();
     newCompany.value = ''; // Clear input
   } catch (error) {
@@ -220,7 +233,9 @@ const addCompany = async () => {
 
 const removeCompany = async (id) => {
   try {
-    //await axios.delete(`http://localhost:5000/companies/${id}`); remove from ui beta test
+    if (editable) {
+      await axios.delete(`http://localhost:5000/companies/${id}`); //remove from ui beta test
+    }
     fetchCompanies();
   } catch (error) {
     console.error("Error deleting company:", error);
@@ -242,7 +257,9 @@ const fetchTracks = async () => {
 
 const removeTrack = async (selected) => {
   try {
-    //await axios.delete(`http://localhost:5000/tracks/${selected._id}`); //remove for UI beta
+    if (editable) {
+      await axios.delete(`http://localhost:5000/tracks/${selected._id}`); //remove for UI beta
+    }
     fetchTracks();
   } catch (error) {
     console.error("Error deleting track:", error);
@@ -296,7 +313,7 @@ const saveCourse = async () => {
     }
     if (updatedCourse.relatedCourses) {
       updatedCourse.relatedCourses = updatedCourse.relatedCourses.map(name => {
-        const relatedCourse = relatedCoursesList.value.find(m => m.name === name);
+        const relatedCourse = coursesList.value.find(m => m.name === name);
         return relatedCourse ? relatedCourse._id : name;
       });
     }
@@ -322,11 +339,15 @@ const saveCourse = async () => {
 
     // FIXED: Check `updatedCourse.id`, not `updatedCourse.value.id`
     if (updatedCourse._id != null) {
-      //await axios.put(`http://localhost:5000/courses/${updatedCourse._id}`, updatedCourse); //remove for UI beta
+      if (editable) {
+        await axios.put(`http://localhost:5000/courses/${updatedCourse._id}`, updatedCourse); //remove for UI beta
+      }
       // toast.add({ severity: 'success', summary: 'Success', detail: 'Course updated', life: 3000 });
     } else {
       // FIXED: Should use `updatedCourse`, not `updateCourse.value`
-      //await axios.post("http://localhost:5000/courses", updatedCourse); remove for ui beta
+      if (editable) {
+        await axios.post("http://localhost:5000/courses", updatedCourse); //remove for ui beta
+      }
       // toast.add({ severity: 'success', summary: 'Success', detail: 'Course added', life: 3000 });
     }
 
@@ -351,7 +372,7 @@ const editCourse = (selected) => {
 
   if (course.value.relatedCourses) {
     course.value.relatedCourses = course.value.relatedCourses.map(id => {
-      const relatedCourse = relatedCoursesList.value.find(o => o._id === id);
+      const relatedCourse = coursesList.value.find(o => o._id === id);
       return relatedCourse ? relatedCourse.name : id // fallback
     })
   }
@@ -413,11 +434,15 @@ const saveTrack = async () => {
 
     // FIXED: Check `updatedCourse.id`, not `updatedCourse.value.id`
     if (updatedTrack._id != null) {
-      //await axios.put(`http://localhost:5000/tracks/${updatedTrack._id}`, updatedTrack); //remove for UI beta
+      if (editable) {
+        await axios.put(`http://localhost:5000/tracks/${updatedTrack._id}`, updatedTrack); //remove for UI beta
+      }
       // toast.add({ severity: 'success', summary: 'Success', detail: 'Course updated', life: 3000 });
     } else {
       // FIXED: Should use `updatedCourse`, not `updateCourse.value`
-      //await axios.post("http://localhost:5000/tracks", updatedTrack); remove for UI beta
+      if (editable) {
+        await axios.post("http://localhost:5000/tracks", updatedTrack); //remove for UI beta
+      }
       // toast.add({ severity: 'success', summary: 'Success', detail: 'Course added', life: 3000 });
     }
 
@@ -460,7 +485,9 @@ const editTrack = (selected) => {
 // Delete confirmation
 const confirmDeleteCourse = async (selected) => {
   try {
-    //await axios.delete(`http://localhost:5000/courses/${selected._id}`); remove from ui beta
+    if (editable) {
+      await axios.delete(`http://localhost:5000/courses/${selected._id}`); //remove from ui beta
+    }
     // toast.add({ severity: 'warn', summary: 'Deleted', detail: 'Course removed', life: 3000 });
     fetchCourses();
   } catch (error) {
@@ -498,8 +525,8 @@ fetchCourses();
           </template> -->
         </Toolbar>
 
-        <DataTable class="px-4" ref="dt" v-model:selection="selectedCourses" :value="coursesList" dataKey="id" :paginator="true"
-          :rows="10" :filters="filters"
+        <DataTable class="px-4" ref="dt" v-model:selection="selectedCourses" :value="coursesList" dataKey="id"
+          :paginator="true" :rows="10" :filters="filters"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 25]"
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} courses">
@@ -675,29 +702,29 @@ fetchCourses();
         <Column field="name" header="Track Name"></Column>
         <Column field="description" header="Description" style="min-width: 500px; flex-grow: 2;"></Column>
         <Column field="primaryCourses" header="Primary Courses" sortable style="min-width: 12rem; flex-grow: 1;">
-            <template #body="slotProps">
-              <span v-if="slotProps.data.primaryCourses && slotProps.data.primaryCourses.length">
-                {{ getCourseNames(slotProps.data.primaryCourses) }}
-              </span>
-              <span v-else>-</span>
-            </template>
-          </Column>
-          <Column field="optionalCourses" header="Optional Courses" sortable style="min-width: 12rem; flex-grow: 1;">
-            <template #body="slotProps">
-              <span v-if="slotProps.data.optionalCourses && slotProps.data.optionalCourses.length">
-                {{ getCourseNames(slotProps.data.optionalCourses) }}
-              </span>
-              <span v-else>-</span>
-            </template>
-          </Column>
-          <Column field="companies" header="Companies" sortable style="min-width: 12rem; flex-grow: 1;">
-            <template #body="slotProps">
-              <span v-if="slotProps.data.companies && slotProps.data.companies.length">
-                {{ getCompanyNames(slotProps.data.companies) }}
-              </span>
-              <span v-else>-</span>
-            </template>
-          </Column>
+          <template #body="slotProps">
+            <span v-if="slotProps.data.primaryCourses && slotProps.data.primaryCourses.length">
+              {{ getCourseNames(slotProps.data.primaryCourses) }}
+            </span>
+            <span v-else>-</span>
+          </template>
+        </Column>
+        <Column field="optionalCourses" header="Optional Courses" sortable style="min-width: 12rem; flex-grow: 1;">
+          <template #body="slotProps">
+            <span v-if="slotProps.data.optionalCourses && slotProps.data.optionalCourses.length">
+              {{ getCourseNames(slotProps.data.optionalCourses) }}
+            </span>
+            <span v-else>-</span>
+          </template>
+        </Column>
+        <Column field="companies" header="Companies" sortable style="min-width: 12rem; flex-grow: 1;">
+          <template #body="slotProps">
+            <span v-if="slotProps.data.companies && slotProps.data.companies.length">
+              {{ getCompanyNames(slotProps.data.companies) }}
+            </span>
+            <span v-else>-</span>
+          </template>
+        </Column>
         <Column header="Actions">
           <template #body="slotProps">
             <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editTrack(slotProps.data)" />
@@ -714,8 +741,8 @@ fetchCourses();
         <Card class="p-4">
           <template #title>Course Name</template>
           <template #content>
-            <InputText id="name" v-model.trim="course.name" required autofocus :invalid="courseSubmitted && !course.name"
-              class="w-full p-2" />
+            <InputText id="name" v-model.trim="course.name" required autofocus
+              :invalid="courseSubmitted && !course.name" class="w-full p-2" />
             <small v-if="courseSubmitted && !course.name" class="text-red-500">Name is required.</small>
           </template>
         </Card>
@@ -831,28 +858,28 @@ fetchCourses();
         <br>
 
         <Card class="p-4">
-            <template #title>Primary Courses</template>
-            <template #content>
-              <MultiSelect id="primaryCourses" v-model="track.primaryCourses" :options="coursesList.map(c => c.name)"
-                filter placeholder="Select Primary Courses" class="w-full p-2" />
-            </template>
-          </Card>
+          <template #title>Primary Courses</template>
+          <template #content>
+            <MultiSelect id="primaryCourses" v-model="track.primaryCourses" :options="coursesList.map(c => c.name)"
+              filter placeholder="Select Primary Courses" class="w-full p-2" />
+          </template>
+        </Card>
 
-          <Card class="p-4">
-            <template #title>Optional Courses</template>
-            <template #content>
-              <MultiSelect id="optionalCourses" v-model="track.optionalCourses" :options="coursesList.map(c => c.name)"
-                filter placeholder="Select Optional Courses" class="w-full p-2" />
-            </template>
-          </Card>
+        <Card class="p-4">
+          <template #title>Optional Courses</template>
+          <template #content>
+            <MultiSelect id="optionalCourses" v-model="track.optionalCourses" :options="coursesList.map(c => c.name)"
+              filter placeholder="Select Optional Courses" class="w-full p-2" />
+          </template>
+        </Card>
 
-          <Card class="p-4">
-            <template #title>Companies</template>
-            <template #content>
-              <MultiSelect id="companies" v-model="track.companies" :options="companiesList.map(c => c.name)" filter
-                placeholder="Select Companies" class="w-full p-2" />
-            </template>
-          </Card>
+        <Card class="p-4">
+          <template #title>Companies</template>
+          <template #content>
+            <MultiSelect id="companies" v-model="track.companies" :options="companiesList.map(c => c.name)" filter
+              placeholder="Select Companies" class="w-full p-2" />
+          </template>
+        </Card>
 
         <!-- Image URL -->
         <Card class="p-4">
@@ -883,16 +910,21 @@ fetchCourses();
 
 <style scoped>
 .p-multiselect {
-  max-width: 100%; /* Ensures it doesn’t overflow */
+  max-width: 100%;
+  /* Ensures it doesn’t overflow */
 }
 
 .p-multiselect .p-multiselect-label {
-  white-space: normal !important; /* Allows text to wrap */
+  white-space: normal !important;
+  /* Allows text to wrap */
   display: flex;
-  flex-wrap: wrap; /* Enables wrapping */
-  min-height: 2.5rem; /* Adjust height as needed */
-  max-height: 300px; /* Set a max height */
-  overflow-y: auto; /* Allows vertical scrolling if needed */
+  flex-wrap: wrap;
+  /* Enables wrapping */
+  min-height: 2.5rem;
+  /* Adjust height as needed */
+  max-height: 300px;
+  /* Set a max height */
+  overflow-y: auto;
+  /* Allows vertical scrolling if needed */
 }
-
 </style>
