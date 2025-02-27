@@ -20,7 +20,7 @@ services:
     environment:
       - NODE_ENV=production
     env_file:
-      - .env.production
+      - ./backend/.env.production
     depends_on:
       - mongo
     ports:

@@ -3,3 +3,5 @@ backend/node_modules
 backend/.env
 frontend/public/images
 tracks.xlsx
+frontend/.env.production
+backend/.env.production
