@@ -9,10 +9,16 @@ const majorRoutes = require("./routes/majorRoutes");
 const skillRoutes = require("./routes/skillRoutes");
 const companyRoutes = require("./routes/companyRoutes");
 
+const allowedOrigins = [
+  'http://ecetracks.byu.edu',
+  'http://localhost:5173',
+  'http://localhost:3000'
+];
+
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: allowedOrigins }));
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
