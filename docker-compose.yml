@@ -18,8 +18,9 @@ services:
     container_name: tracks_api
     restart: always
     environment:
-      - MONGO_URI=mongodb://mongo:27017/tracks
       - NODE_ENV=production
+    env_file:
+      - .env.production
     depends_on:
       - mongo
     ports:

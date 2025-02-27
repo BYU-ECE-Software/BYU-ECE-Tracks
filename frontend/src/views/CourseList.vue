@@ -61,10 +61,10 @@ const currentPage = ref(0);
 const fetchCourses = async () => {
   try {
     const [coursesRes, majorsRes, companiesRes, tracksRes] = await Promise.all([
-      axios.get("http://localhost:5000/courses"),
-      axios.get("http://localhost:5000/majors"),
-      axios.get("http://localhost:5000/companies"),
-      axios.get("http://localhost:5000/tracks"),
+      axios.get(`${import.meta.env.VITE_API_BASE_URI}/courses`),
+      axios.get(`${import.meta.env.VITE_API_BASE_URI}/majors`),
+      axios.get(`${import.meta.env.VITE_API_BASE_URI}/companies`),
+      axios.get(`${import.meta.env.VITE_API_BASE_URI}/tracks`),
     ]);
 
     courses.value = coursesRes.data;

@@ -97,7 +97,7 @@ const track = ref({ companies: [], primaryCourses: [], optionalCourses: [] });
 const fetchTrackDetails = async () => {
   try {
     console.log(route.params.id);
-    const response = await axios.get(`http://localhost:5000/tracks/${route.params.id}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/tracks/${route.params.id}`);
     track.value = response.data;
   } catch (error) {
     console.error("Error fetching track details:", error);
@@ -118,7 +118,7 @@ const getCompanyNameById = async (companyId) => {
 
   try {
     // Fetch company details from API
-    const response = await axios.get(`http://localhost:5000/companies/${companyId}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/companies/${companyId}`);
     const companyName = response.data.name;
 
     // Store result in cache
@@ -140,7 +140,7 @@ const getCourseNameById = async (courseId) => {
 
   try {
     // Fetch course details from API
-    const response = await axios.get(`http://localhost:5000/courses/${courseId}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/courses/${courseId}`);
     const courseName = response.data.name;
 
     // Store result in cache

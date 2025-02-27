@@ -195,7 +195,7 @@ const course = ref(null);
 // Fetch Course Details
 const fetchCourseDetails = async () => {
   try {
-    const response = await axios.get(`http://localhost:5000/courses/${route.params.id}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/courses/${route.params.id}`);
     course.value = response.data;
   } catch (error) {
     console.error("Error fetching course details:", error);
@@ -220,7 +220,7 @@ const getMajorNameById = async (majorId) => {
 
   try {
     // Fetch major details from API
-    const response = await axios.get(`http://localhost:5000/majors/${majorId}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/majors/${majorId}`);
     const majorName = response.data.name;
 
     // Store result in cache
@@ -244,7 +244,7 @@ const getSkillNameById = async (skillId) => {
 
   try {
     // Fetch skill details from API
-    const response = await axios.get(`http://localhost:5000/skills/${skillId}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/skills/${skillId}`);
     const skillName = response.data.name;
 
     // Store result in cache
@@ -266,7 +266,7 @@ const getTrackNameById = async (trackId) => {
 
   try {
     // Fetch track details from API
-    const response = await axios.get(`http://localhost:5000/tracks/${trackId}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/tracks/${trackId}`);
     const trackName = response.data.name;
 
     // Store result in cache
@@ -288,7 +288,7 @@ const getCompanyNameById = async (companyId) => {
 
   try {
     // Fetch company details from API
-    const response = await axios.get(`http://localhost:5000/companies/${companyId}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/companies/${companyId}`);
     const companyName = response.data.name;
 
     // Store result in cache
@@ -310,7 +310,7 @@ const getCourseNameById = async (courseId) => {
 
   try {
     // Fetch course details from API
-    const response = await axios.get(`http://localhost:5000/courses/${courseId}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/courses/${courseId}`);
     const courseName = response.data.name;
 
     // Store result in cache

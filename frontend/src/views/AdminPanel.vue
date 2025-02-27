@@ -59,10 +59,10 @@ const companiesList = ref([]);
 const fetchData = async () => {
   try {
     const [majorsRes, tracksRes, skillsRes, companiesRes] = await Promise.all([
-      axios.get('http://localhost:5000/majors'),
-      axios.get('http://localhost:5000/tracks'),
-      axios.get('http://localhost:5000/skills'),
-      axios.get('http://localhost:5000/companies')
+      axios.get(`${import.meta.env.VITE_API_BASE_URI}/majors`),
+      axios.get(`${import.meta.env.VITE_API_BASE_URI}/tracks`),
+      axios.get(`${import.meta.env.VITE_API_BASE_URI}/skills`),
+      axios.get(`${import.meta.env.VITE_API_BASE_URI}/companies`)
     ]);
 
     majorsList.value = majorsRes.data
@@ -135,7 +135,7 @@ const newMajor = ref('');
 
 const fetchMajors = async () => {
   try {
-    const response = await axios.get('http://localhost:5000/majors');
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/majors`);
     majorsList.value = response.data
   } catch (error) {
     console.error("Error fetching majors:", error);
@@ -147,7 +147,7 @@ const addMajor = async () => {
 
   try {
     if (editable) {
-      await axios.post('http://localhost:5000/majors', { name: newMajor.value }); //remove for UI beta
+      await axios.post(`${import.meta.env.VITE_API_BASE_URI}/majors`, { name: newMajor.value }); //remove for UI beta
     }
     fetchMajors();
     newMajor.value = ''; // Clear input
@@ -159,7 +159,7 @@ const addMajor = async () => {
 const removeMajor = async (id) => {
   try {
     if (editable) {
-      await axios.delete(`http://localhost:5000/majors/${id}`); //remove for ui beta
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URI}/majors/${id}`); //remove for ui beta
     }
     fetchMajors();
   } catch (error) {
@@ -171,7 +171,7 @@ const newSkill = ref('');
 
 const fetchSkills = async () => {
   try {
-    const response = await axios.get('http://localhost:5000/skills');
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/skills`);
     skillsList.value = response.data
   } catch (error) {
     console.error("Error fetching skills:", error);
@@ -183,7 +183,7 @@ const addSkill = async () => {
 
   try {
     if (editable) {
-      await axios.post('http://localhost:5000/skills', { name: newSkill.value }); //remove for UI beta
+      await axios.post(`${import.meta.env.VITE_API_BASE_URI}/skills`, { name: newSkill.value }); //remove for UI beta
     }
     fetchSkills();
     newSkill.value = ''; // Clear input
@@ -196,7 +196,7 @@ const removeSkill = async (id) => {
   console.log("Deleting skill with ID: ", id)
   try {
     if (editable) {
-      const response = await axios.delete(`http://localhost:5000/skills/${id}`); //remove for ui beta
+      const response = await axios.delete(`${import.meta.env.VITE_API_BASE_URI}/skills/${id}`); //remove for ui beta
     }
     // if (response.status == 200) {
     fetchSkills();
@@ -210,7 +210,7 @@ const newCompany = ref('');
 
 const fetchCompanies = async () => {
   try {
-    const response = await axios.get('http://localhost:5000/companies');
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/companies`);
     companiesList.value = response.data
   } catch (error) {
     console.error("Error fetching companies:", error);
@@ -222,7 +222,7 @@ const addCompany = async () => {
 
   try {
     if (editable) {
-      await axios.post('http://localhost:5000/companies', { name: newCompany.value }); //Removed for beta UI test
+      await axios.post(`${import.meta.env.VITE_API_BASE_URI}/companies`, { name: newCompany.value }); //Removed for beta UI test
     }
     fetchCompanies();
     newCompany.value = ''; // Clear input
@@ -234,7 +234,7 @@ const addCompany = async () => {
 const removeCompany = async (id) => {
   try {
     if (editable) {
-      await axios.delete(`http://localhost:5000/companies/${id}`); //remove from ui beta test
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URI}/companies/${id}`); //remove from ui beta test
     }
     fetchCompanies();
   } catch (error) {
@@ -248,7 +248,7 @@ const track = ref({ name: "", description: "", imageUrl: "", primaryCourses: [],
 
 const fetchTracks = async () => {
   try {
-    const response = await axios.get("http://localhost:5000/tracks");
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/tracks`);
     tracksList.value = response.data;
   } catch (error) {
     console.error("Error fetching tracks:", error);
@@ -258,7 +258,7 @@ const fetchTracks = async () => {
 const removeTrack = async (selected) => {
   try {
     if (editable) {
-      await axios.delete(`http://localhost:5000/tracks/${selected._id}`); //remove for UI beta
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URI}/tracks/${selected._id}`); //remove for UI beta
     }
     fetchTracks();
   } catch (error) {
@@ -275,7 +275,7 @@ const filters = reactive({
 // Fetch courses from backend
 const fetchCourses = async () => {
   try {
-    const response = await axios.get("http://localhost:5000/courses");
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/courses`);
     coursesList.value = response.data;
   } catch (error) {
     console.error("Error fetching courses:", error);
@@ -340,13 +340,13 @@ const saveCourse = async () => {
     // FIXED: Check `updatedCourse.id`, not `updatedCourse.value.id`
     if (updatedCourse._id != null) {
       if (editable) {
-        await axios.put(`http://localhost:5000/courses/${updatedCourse._id}`, updatedCourse); //remove for UI beta
+        await axios.put(`${import.meta.env.VITE_API_BASE_URI}/courses/${updatedCourse._id}`, updatedCourse); //remove for UI beta
       }
       // toast.add({ severity: 'success', summary: 'Success', detail: 'Course updated', life: 3000 });
     } else {
       // FIXED: Should use `updatedCourse`, not `updateCourse.value`
       if (editable) {
-        await axios.post("http://localhost:5000/courses", updatedCourse); //remove for ui beta
+        await axios.post(`${import.meta.env.VITE_API_BASE_URI}/courses`, updatedCourse); //remove for ui beta
       }
       // toast.add({ severity: 'success', summary: 'Success', detail: 'Course added', life: 3000 });
     }
@@ -435,13 +435,13 @@ const saveTrack = async () => {
     // FIXED: Check `updatedCourse.id`, not `updatedCourse.value.id`
     if (updatedTrack._id != null) {
       if (editable) {
-        await axios.put(`http://localhost:5000/tracks/${updatedTrack._id}`, updatedTrack); //remove for UI beta
+        await axios.put(`${import.meta.env.VITE_API_BASE_URI}/tracks/${updatedTrack._id}`, updatedTrack); //remove for UI beta
       }
       // toast.add({ severity: 'success', summary: 'Success', detail: 'Course updated', life: 3000 });
     } else {
       // FIXED: Should use `updatedCourse`, not `updateCourse.value`
       if (editable) {
-        await axios.post("http://localhost:5000/tracks", updatedTrack); //remove for UI beta
+        await axios.post(`${import.meta.env.VITE_API_BASE_URI}/tracks`, updatedTrack); //remove for UI beta
       }
       // toast.add({ severity: 'success', summary: 'Success', detail: 'Course added', life: 3000 });
     }
@@ -486,7 +486,7 @@ const editTrack = (selected) => {
 const confirmDeleteCourse = async (selected) => {
   try {
     if (editable) {
-      await axios.delete(`http://localhost:5000/courses/${selected._id}`); //remove from ui beta
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URI}/courses/${selected._id}`); //remove from ui beta
     }
     // toast.add({ severity: 'warn', summary: 'Deleted', detail: 'Course removed', life: 3000 });
     fetchCourses();

@@ -26,12 +26,13 @@ mongoose.connect(process.env.MONGO_URI, {
 }).then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
 
-app.use("/courses", courseRoutes);
-app.use("/tracks", trackRoutes);
-app.use("/majors", majorRoutes);
-app.use("/skills", skillRoutes);
-app.use("/companies", companyRoutes);
+app.use("/api/courses", courseRoutes);
+app.use("/api/tracks", trackRoutes);
+app.use("/api/majors", majorRoutes);
+app.use("/api/skills", skillRoutes);
+app.use("/api/companies", companyRoutes);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const PORT = process.env.PORT;
+const IP = process.env.IP;
+app.listen(PORT, IP, () => console.log(`Server running on port ${PORT}`));
 
