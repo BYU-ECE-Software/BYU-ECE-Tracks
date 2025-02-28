@@ -21,7 +21,7 @@ import CourseList from './CourseList.vue';
 // const toast = useToast();
 
 //Boo we hate global variables
-const editable = false;
+const editable = ref(false);
 
 const activeTab = ref('courses');
 const tabs = ref([
@@ -146,7 +146,7 @@ const addMajor = async () => {
   if (!newMajor.value.trim()) return;
 
   try {
-    if (editable) {
+    if (editable.value) {
       await axios.post(`${import.meta.env.VITE_API_BASE_URI}/majors`, { name: newMajor.value }); //remove for UI beta
     }
     fetchMajors();
@@ -158,7 +158,7 @@ const addMajor = async () => {
 
 const removeMajor = async (id) => {
   try {
-    if (editable) {
+    if (editable.value) {
       await axios.delete(`${import.meta.env.VITE_API_BASE_URI}/majors/${id}`); //remove for ui beta
     }
     fetchMajors();
@@ -182,7 +182,7 @@ const addSkill = async () => {
   if (!newSkill.value.trim()) return;
 
   try {
-    if (editable) {
+    if (editable.value) {
       await axios.post(`${import.meta.env.VITE_API_BASE_URI}/skills`, { name: newSkill.value }); //remove for UI beta
     }
     fetchSkills();
@@ -195,7 +195,7 @@ const addSkill = async () => {
 const removeSkill = async (id) => {
   console.log("Deleting skill with ID: ", id)
   try {
-    if (editable) {
+    if (editable.value) {
       const response = await axios.delete(`${import.meta.env.VITE_API_BASE_URI}/skills/${id}`); //remove for ui beta
     }
     // if (response.status == 200) {
@@ -221,7 +221,7 @@ const addCompany = async () => {
   if (!newCompany.value.trim()) return;
 
   try {
-    if (editable) {
+    if (editable.value) {
       await axios.post(`${import.meta.env.VITE_API_BASE_URI}/companies`, { name: newCompany.value }); //Removed for beta UI test
     }
     fetchCompanies();
@@ -233,7 +233,7 @@ const addCompany = async () => {
 
 const removeCompany = async (id) => {
   try {
-    if (editable) {
+    if (editable.value) {
       await axios.delete(`${import.meta.env.VITE_API_BASE_URI}/companies/${id}`); //remove from ui beta test
     }
     fetchCompanies();
@@ -257,7 +257,7 @@ const fetchTracks = async () => {
 
 const removeTrack = async (selected) => {
   try {
-    if (editable) {
+    if (editable.value) {
       await axios.delete(`${import.meta.env.VITE_API_BASE_URI}/tracks/${selected._id}`); //remove for UI beta
     }
     fetchTracks();
@@ -339,13 +339,13 @@ const saveCourse = async () => {
 
     // FIXED: Check `updatedCourse.id`, not `updatedCourse.value.id`
     if (updatedCourse._id != null) {
-      if (editable) {
+      if (editable.value) {
         await axios.put(`${import.meta.env.VITE_API_BASE_URI}/courses/${updatedCourse._id}`, updatedCourse); //remove for UI beta
       }
       // toast.add({ severity: 'success', summary: 'Success', detail: 'Course updated', life: 3000 });
     } else {
       // FIXED: Should use `updatedCourse`, not `updateCourse.value`
-      if (editable) {
+      if (editable.value) {
         await axios.post(`${import.meta.env.VITE_API_BASE_URI}/courses`, updatedCourse); //remove for ui beta
       }
       // toast.add({ severity: 'success', summary: 'Success', detail: 'Course added', life: 3000 });
@@ -434,13 +434,13 @@ const saveTrack = async () => {
 
     // FIXED: Check `updatedCourse.id`, not `updatedCourse.value.id`
     if (updatedTrack._id != null) {
-      if (editable) {
+      if (editable.value) {
         await axios.put(`${import.meta.env.VITE_API_BASE_URI}/tracks/${updatedTrack._id}`, updatedTrack); //remove for UI beta
       }
       // toast.add({ severity: 'success', summary: 'Success', detail: 'Course updated', life: 3000 });
     } else {
       // FIXED: Should use `updatedCourse`, not `updateCourse.value`
-      if (editable) {
+      if (editable.value) {
         await axios.post(`${import.meta.env.VITE_API_BASE_URI}/tracks`, updatedTrack); //remove for UI beta
       }
       // toast.add({ severity: 'success', summary: 'Success', detail: 'Course added', life: 3000 });
@@ -485,7 +485,7 @@ const editTrack = (selected) => {
 // Delete confirmation
 const confirmDeleteCourse = async (selected) => {
   try {
-    if (editable) {
+    if (editable.value) {
       await axios.delete(`${import.meta.env.VITE_API_BASE_URI}/courses/${selected._id}`); //remove from ui beta
     }
     // toast.add({ severity: 'warn', summary: 'Deleted', detail: 'Course removed', life: 3000 });
