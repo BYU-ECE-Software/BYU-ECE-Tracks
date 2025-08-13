@@ -4,7 +4,16 @@
             <a href="https://www.byu.edu" target="_blank" rel="noopener noreferrer" class="mr-4">
                 <img src="@/assets/BYU_monogram_white.svg" alt="Logo" class="h-10 w-auto">
             </a>
-            <h1 class="text-2xl font-bold">| ECE Tracks</h1>
+            <RouterLink to="/tracks">
+                <h1 class="text-2xl font-bold"> | ECE Tracks</h1>
+            </RouterLink>
+        </div>
+        <div class="absolute top-4 right-6">
+            <a href="http://localhost:3000/api/auth/login"
+                class="bg-white text-blue-900 font-semibold py-2 px-4 rounded shadow hover:bg-gray-100 transition inline-block">
+                Sign In
+            </a>
+
         </div>
     </header>
 </template>
@@ -17,18 +26,18 @@ export default {
 
 <style scoped>
 header {
-  width: 100%;
+    width: 100%;
 }
 
 .header-bar {
-  width: 100vw;
-  background-color: var(--byu-navy);
-  padding: 2rem;
-  text-align: center;
-  margin: 0 auto;
+    width: 100vw;
+    background-color: var(--byu-navy);
+    padding: 2rem;
+    text-align: center;
+    margin: 0 auto;
 }
 
-h1{
-    color:white;
+h1 {
+    color: white;
 }
 </style>

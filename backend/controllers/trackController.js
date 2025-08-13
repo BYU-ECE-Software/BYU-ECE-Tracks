@@ -36,3 +36,8 @@ exports.deleteTrack = async (req, res) => {
   await Track.findByIdAndDelete(req.params.id);
   res.json({ message: "Track deleted" });
 };
+
+exports.getTrackByExtension = async (req, res) => {
+  const track = await Track.findOne({ extension: req.params.name });
+    res.json(track);
+};

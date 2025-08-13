@@ -1,111 +1,83 @@
 <template>
+  <div class="mx-auto px-4 sm:px-6 lg:px-12 py-8">
+    <h1 class="text-5xl font-bold text-center mb-10 py-12">{{ supertrackTitle }}</h1>
 
-  <div class="mx-auto px-6 py-8">
-    <h1 class="text-5xl font-bold text-center mb-10 py-12">Tracks</h1>
-
-    <!-- Filters Section -->
-    <div
-      class="row flex flex-col items-center space-y-4 md:flex-row md:justify-center md:space-x-4 md:space-y-0 mb-8">
-      <InputText v-model="searchQuery" placeholder="Search tracks..." class="p-inputtext-lg w-64" />
-      <Select v-model="selectedFavoriteCourse" :options="courses" optionLabel="name" optionValue="_id" filter
-        placeholder="Filter by Favorite Course" class="p-dropdown w-64" />
-      <Select v-model="selectedCompany" :options="companies" optionLabel="name" optionValue="_id" filter
-        placeholder="Filter by Company" class="p-dropdown w-64" />
-      <Button label="Reset" icon="pi pi-refresh" class="p-button-danger w-32" @click="resetFilters" />
-    </div>
+    <h3 class="text-2xl font-semibold text-center mb-6">{{ supertrackDescription }}</h3><br></br>
 
     <!-- Grid Layout for Tracks -->
-    <div class="place-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-32">
-      <Card v-for="track in paginatedTracks" :key="track._id" class="track-card" @click="viewTrack(track)">
+    <div class="place-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <Card v-for="track in tracksWithUrls" :key="track._id" class="track-card w-full h-full cursor-pointer transition hover:shadow-lg" @click="viewTrack(track)">
         <template #content>
           <div class="flex flex-col items-center">
-            <!-- Track Image -->
-            <img v-if="track.imageUrl" :src="track.imageUrl" :alt="track.name" class="track-image" />
+            <img v-if="track.imageUrl" :src="track.imageUrl" :alt="track.name" class="track-image max-h-96 object-cover rounded" />
             <div class="p-4 text-center">
-              <!-- Track Name -->
               <h3 class="text-xl font-bold py-1">{{ track.name }}</h3>
-              <!-- Track Description -->
               <p class="text-sm mt-2">{{ track.description }}</p>
             </div>
           </div>
         </template>
       </Card>
     </div>
-    <!-- Pagination -->
-    <Paginator :rows="rowsPerPage" :totalRecords="filteredTracks.length" @page="onPageChange" class="mt-8" />
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
-import Card from 'primevue/card';
-import { useRouter } from "vue-router";
-import InputText from "primevue/inputtext";
-import Paginator from "primevue/paginator";
-import Select from "primevue/select"
-import { Button } from "primevue";
-import HeaderBar from "@/components/HeaderBar.vue";
+import Card from "primevue/card";
+import { useImageFromMinio } from "@/composables/useImageFromMinio";
 
+const route = useRoute();
 const router = useRouter();
-const courses = ref([]);
-const companies = ref([]);
-const tracks = ref([]);
-const searchQuery = ref("");
-const selectedFavoriteCourse = ref(null);
-const selectedCompany = ref(null);
 
-const rowsPerPage = ref(12);
-const currentPage = ref(0);
+const supertrackTitle = ref("");
+const supertrackDescription = ref("");
+const tracksWithUrls = ref([]);
 
-const fetchTracks = async () => {
+const fetchSupertrackAndTracks = async () => {
   try {
-    const [coursesRes, companiesRes, tracksRes] = await Promise.all([
-      axios.get(`${import.meta.env.VITE_API_BASE_URI}/courses`),
-      axios.get(`${import.meta.env.VITE_API_BASE_URI}/companies`),
-      axios.get(`${import.meta.env.VITE_API_BASE_URI}/tracks`),
-    ]);
+    const supertrackExtension = route.params.supertrack;
 
-    courses.value = coursesRes.data;
-    companies.value = companiesRes.data;
-    tracks.value = tracksRes.data;
+    // Fetch the supertrack by name
+    const { data: supertrack } = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/supertracks/name/${supertrackExtension}`);
+    console.log(supertrack);
+    supertrackTitle.value = supertrack.name;
+    supertrackDescription.value = supertrack.description;
+
+    // Fetch full track data by ID
+    const { data: allTracks } = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/tracks`);
+    const relatedTracks = allTracks.filter((track) => supertrack.tracks.includes(track._id));
+
+    // Load images
+    const resolved = await Promise.all(
+      relatedTracks.map(async (track) => {
+        const { imageUrl, loadImageUrl } = useImageFromMinio();
+        await loadImageUrl(track.imageKey);
+        return {
+          ...track,
+          imageUrl: imageUrl.value,
+        };
+      })
+    );
+
+    tracksWithUrls.value = resolved;
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error("Failed to load supertrack and tracks", error);
   }
 };
 
-const filteredTracks = computed(() => {
-  return tracks.value.filter((track) => {
-    return (
-      track.name.toLowerCase().includes(searchQuery.value.toLowerCase()) &&
-      (!selectedFavoriteCourse.value || track.primaryCourses.includes(selectedFavoriteCourse.value) || track.optionalCourses.includes(selectedFavoriteCourse.value)) &&
-      (!selectedCompany.value || track.companies.includes(selectedCompany.value))
-    );
-  });
-});
-
-const paginatedTracks = computed(() => {
-  const start = currentPage.value * rowsPerPage.value;
-  return filteredTracks.value.slice(start, start + rowsPerPage.value);
-});
-
-const resetFilters = () => {
-  searchQuery.value = "";
-  selectedFavoriteCourse.value = null;
-  selectedCompany.value = null;
-};
-
-const onPageChange = (event) => {
-  currentPage.value = event.page;
-};
-
-
 const viewTrack = (track) => {
-  const routeUrl = router.resolve({ name: "TracksDetail", params: { id: track._id } });
-  window.open(routeUrl.href, "_blank");
+  console.log(track);
+  const routeUrl = router.resolve({
+    name: 'TrackDetail',
+    params: { track: track.extension },
+  })
+  console.log(routeUrl);
+  window.open(routeUrl.href, '_blank')
 };
 
-onMounted(fetchTracks);
+onMounted(fetchSupertrackAndTracks);
 </script>
 
 <style scoped>
