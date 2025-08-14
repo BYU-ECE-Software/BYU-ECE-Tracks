@@ -16,7 +16,7 @@ const supertrackRoutes = require("./routes/supertrackRoutes");
 // const authRoutes = require("./routes/authRoutes");
 
 const allowedOrigins = [
-  "http://ecetracks.byu.edu",
+  "https://ecetracks.byu.edu",
   "http://localhost:5173",
   "http://localhost:3000",
 ];
