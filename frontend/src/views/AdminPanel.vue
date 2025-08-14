@@ -20,7 +20,7 @@ import CourseList from './CourseList.vue';
 
 import { useImageFromMinio } from '@/composables/useImageFromMinio';
 
-const { imageUrl, isLoading, error, loadImageUrl } = useImageFromMinio();
+const { imageUrl, loadImageUrl } = useImageFromMinio();
 
 
 // const toast = useToast();
@@ -306,6 +306,10 @@ const saveTrack = async () => {
 const editTrack = (selected) => {
   track.value = { ...selected };
 
+  if (track.value.imageKey) {
+    loadImageUrl(track.value.imageKey);
+  }
+
   if (track.value.primaryCourses) {
     track.value.primaryCourses = track.value.primaryCourses.map(id => {
       const primaryCourse = coursesList.value.find(c => c._id === id);
@@ -372,6 +376,10 @@ const saveSupertrack = async () => {
 const editSupertrack = (selected) => {
   supertrack.value = { ...selected };
 
+  if (supertrack.value.imageKey) {
+    loadImageUrl(supertrack.value.imageKey);
+  }
+
   if (supertrack.value.tracks) {
     supertrack.value.tracks = supertrack.value.tracks.map(id => {
       const track = tracksList.value.find(c => c._id === id);
@@ -434,6 +442,7 @@ const onUploadSuccessSupertrack = ({ xhr }) => {
         console.error("Error fetching supertrack image URL:", err);
       });
     console.log("Supertrack image URL:", supertrack.value.imageKey);
+    loadImageUrl(supertrack.value.imageKey);
   }
 const onUploadSuccessTrack = ({ xhr }) => {
     const response = JSON.parse(xhr.response);
@@ -450,6 +459,7 @@ const onUploadSuccessTrack = ({ xhr }) => {
         console.error("Error fetching track image URL:", err);
       });
     console.log("Track image URL:", track.value.imageKey);
+    loadImageUrl(track.value.imageKey);
   }
 
 
@@ -670,8 +680,8 @@ fetchCourses();
           <template #content>
             <FileUpload mode="basic" name="file" url="http://localhost:3000/api/upload" accept="image/*" auto
               chooseLabel="Upload Image" @upload="onUploadSuccessTrack" />
-            <div v-if="track.imageUrl" class="mt-4">
-              <img :src="track.imageUrl" alt="Uploaded Image" class="max-w-full rounded" />
+            <div v-if="imageUrl" class="mt-4">
+              <img :src="imageUrl" alt="Uploaded Image" class="max-w-full rounded" />
             </div>
           </template>
         </Card>
@@ -746,8 +756,8 @@ fetchCourses();
           <template #content>
             <FileUpload mode="basic" name="file" url="http://localhost:3000/api/upload" accept="image/*" auto
               chooseLabel="Upload Image" @upload="onUploadSuccessSupertrack" />
-            <div v-if="supertrack.imageUrl" class="mt-4">
-              <img :src="supertrack.imageUrl" alt="Uploaded Image" class="max-w-full rounded" />
+            <div v-if="imageUrl" class="mt-4">
+              <img :src="imageUrl" alt="Uploaded Image" class="max-w-full rounded" />
             </div>
           </template>
         </Card>

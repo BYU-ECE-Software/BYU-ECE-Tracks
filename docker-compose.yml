@@ -23,6 +23,7 @@ services:
       - ./backend/.env.production
     depends_on:
       - mongo
+      - minio
     ports:
       - "3000:3000"
     networks:
@@ -39,9 +40,26 @@ services:
     networks:
       - app_network
 
-networks:
-  app_network:
-    driver: bridge
+  minio:
+    image: minio/minio
+    container_name: tracks_minio
+    restart: always
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    ports:
+      - "9000:9000"  # API access
+      - "9001:9001"  # Web console
+    volumes:
+      - minio_data:/data
+    networks:
+      - app_network
 
 volumes:
   mongo_data:
+  minio_data:
+
+networks:
+  app_network:
+    driver: bridge
