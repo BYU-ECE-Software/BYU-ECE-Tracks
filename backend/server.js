@@ -64,9 +64,9 @@ const idpCert = fs.readFileSync(
   path.resolve("../certs/byu_idp_signing_cert.pem"),
   "utf8"
 ); // IdP x509 cert
-const spKey = fs.readFileSync(path.resolve("../certs/saml_sign.key"), "utf8"); // SP private key
-const spCert = fs.existsSync(path.resolve("../certs/saml_sign.crt"))
-  ? fs.readFileSync(path.resolve("../certs/saml_sign.crt"), "utf8") // optional but useful for metadata
+const spKey = fs.readFileSync(path.resolve("../certs/SAML_sign_bundle.key"), "utf8"); // SP private key
+const spCert = fs.existsSync(path.resolve("../certs/SAML_sign_bundle.crt"))
+  ? fs.readFileSync(path.resolve("../certs/SAML_sign_bundle.crt"), "utf8") // optional but useful for metadata
   : null;
 
 const samlStrategy = new SamlStrategy(
