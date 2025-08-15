@@ -27,6 +27,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const CERT_DIR = process.env.CERT_DIR || path.join(__dirname, "certs");
 
+console.log("Using certificate directory:", CERT_DIR);
+
 const app = express();
 await setupSessions(app);
 
