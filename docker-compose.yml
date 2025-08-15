@@ -55,7 +55,7 @@ services:
     networks:
       - app_network
     volumes:
-      - ./backend/certs:/app/certs:ro
+      - ./certs:/app/certs:ro
 
   mongo:
     image: mongo:6
