@@ -30,6 +30,7 @@ const CERT_DIR = process.env.CERT_DIR || path.join(__dirname, "certs");
 const app = express();
 await setupSessions(app);
 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({ origin: allowedOrigins, credentials: true }));
 
@@ -50,8 +51,8 @@ app.use("/api", uploadRoutes);
 // await redisClient.connect();
 
 // Middleware
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
 // app.use(
 //   session({
 //     name: "session_id",
