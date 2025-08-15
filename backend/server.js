@@ -90,6 +90,11 @@ const spCert = fs.existsSync(path.join(CERT_DIR, "SAML_sign_bundle.crt"))
   ? fs.readFileSync(path.join(CERT_DIR, "SAML_sign_bundle.crt"), "utf8") // optional but useful for metadata
   : null;
 
+  console.log("Path: ", (path.join(CERT_DIR, "SAML_sign_bundle.crt")));
+console.log("Using IdP certificate:", idpCert ? "Loaded" : "Not found");
+console.log("Using SP private key:", spKey ? "Loaded" : "Not found");
+console.log("Using SP certificate:", spCert ? "Loaded" : "Not found");
+
 const samlStrategy = new SamlStrategy(
   {
     //Core
