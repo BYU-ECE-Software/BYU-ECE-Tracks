@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const TrackSchema = new mongoose.Schema({
   name: {type: String, required: true, unique: true, trim: true}, //with dashes and lowercase for url
@@ -11,9 +11,9 @@ const TrackSchema = new mongoose.Schema({
   // companies: [{ type: mongoose.Schema.Types.ObjectId, ref: "Company"}]
 })
 
-const { attachTrackToCourses, removeTrackFromCourses } = require("../middleware/mongooseHooks");
+import { attachTrackToCourses, removeTrackFromCourses } from "../middleware/mongooseHooks.js";
 
 TrackSchema.post("save", attachTrackToCourses);
 TrackSchema.post("findOneAndDelete", removeTrackFromCourses);
 
-module.exports = mongoose.model("Track", TrackSchema);
+export default mongoose.model("Track", TrackSchema);

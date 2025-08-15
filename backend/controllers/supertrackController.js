@@ -1,6 +1,6 @@
-const Supertrack = require("../models/Supertrack");
+import Supertrack from "../models/Supertrack.js";
 
-exports.getSupertracks = async (req, res) => {
+export async function getSupertracks(req, res) {
   try {
     const supertracks = await Supertrack.find();
     res.json(supertracks);
@@ -9,7 +9,7 @@ exports.getSupertracks = async (req, res) => {
   }
 };
 
-exports.getSupertrack = async (req, res) => {
+export async function getSupertrack(req, res) {
   try {
     const supertrack = await Supertrack.findById(req.params.id);
     res.json(supertrack);
@@ -18,13 +18,13 @@ exports.getSupertrack = async (req, res) => {
   }
 };
 
-exports.addSupertrack = async (req, res) => {
+export async function addSupertrack(req, res) {
   const supertrack = new Supertrack(req.body);
   await supertrack.save();
   res.status(201).json(supertrack);
 };
 
-exports.updateSupertrack = async (req, res) => {
+export async function updateSupertrack(req, res) {
   const updatedSupertrack = await Supertrack.findByIdAndUpdate(
     req.params.id,
     req.body,
@@ -33,12 +33,12 @@ exports.updateSupertrack = async (req, res) => {
   res.json(updatedSupertrack);
 };
 
-exports.deleteSupertrack = async (req, res) => {
+export async function deleteSupertrack(req, res) {
   await Supertrack.findByIdAndDelete(req.params.id);
   res.json({ message: "Supertrack deleted" });
 };
 
-exports.getSupertrackNameByExtension = async (req, res) => {
+export async function getSupertrackNameByExtension(req, res) {
   const supertrack = await Supertrack.findOne({ extension: req.params.name });
   res.json(supertrack);
 };

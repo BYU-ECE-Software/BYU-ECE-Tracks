@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const SupertrackSchema = new mongoose.Schema({
   name: {type: String, required: true, unique: true, trim: true}, //this is with dashes and lowercase
@@ -9,4 +9,4 @@ const SupertrackSchema = new mongoose.Schema({
   tracks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Track" }],
 })
 
-module.exports = mongoose.model("Supertrack", SupertrackSchema);
+export default mongoose.model("Supertrack", SupertrackSchema);

@@ -1,5 +1,5 @@
-const express = require("express");
-const { getSupertracks, getSupertrack, addSupertrack, updateSupertrack, deleteSupertrack, getSupertrackNameByExtension } = require("../controllers/supertrackController");
+import express from "express";
+import { getSupertracks, getSupertrack, addSupertrack, updateSupertrack, deleteSupertrack, getSupertrackNameByExtension } from "../controllers/supertrackController.js";
 
 const router = express.Router();
 
@@ -10,4 +10,4 @@ router.put("/:id", updateSupertrack);
 router.delete("/:id", deleteSupertrack);
 router.get("/name/:name", getSupertrackNameByExtension);
 
-module.exports = router;
+export default router;

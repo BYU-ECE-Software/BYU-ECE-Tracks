@@ -1,10 +1,10 @@
-const express = require('express');
-const multer = require('multer');
-const { minioClient, BUCKET, ensureBucketExists } = require('../utils/minio');
-const router = express.Router();
-const { v4: uuidv4 } = require('uuid');
-const path = require('path');
+import express from 'express';
+import multer from 'multer';
+import { minioClient, BUCKET, ensureBucketExists } from '../utils/minio.js';
+import { v4 as uuidv4 } from 'uuid';
+import path from 'path';
 
+const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
@@ -40,4 +40,4 @@ router.get('/image-url/:key', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

@@ -1,18 +1,20 @@
-require("dotenv").config();
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const passport = require("passport");
-const SamlStrategy = require("@node-saml/passport-saml").Strategy;
-const axios = require("axios");
-const session = require("express-session");
-const bodyParser = require("body-parser");
-const fs = require("fs");
-const path = require("path");
+import dotenv from "dotenv"; dotenv.config();
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import passport from "passport";
+import { Strategy as SamlStrategy } from "@node-saml/passport-saml";
+import axios from "axios";
+import path from "path";
+import fs from "fs";
+import { fileURLToPath } from "url";
+import { setupSessions } from "./utils/sessions.js";
 
-const courseRoutes = require("./routes/courseRoutes");
-const trackRoutes = require("./routes/trackRoutes");
-const supertrackRoutes = require("./routes/supertrackRoutes");
+import  courseRoutes from "./routes/courseRoutes.js";
+import  trackRoutes  from "./routes/trackRoutes.js";
+import  supertrackRoutes  from "./routes/supertrackRoutes.js";
+import  uploadRoutes from "./routes/uploadRoutes.js";
+
 // const authRoutes = require("./routes/authRoutes");
 
 const allowedOrigins = [
@@ -21,33 +23,49 @@ const allowedOrigins = [
   "http://localhost:3000",
 ];
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const CERT_DIR = process.env.CERT_DIR || path.join(__dirname, "certs");
+
 const app = express();
+await setupSessions(app);
+
 app.use(express.json());
-app.use(cors({ origin: allowedOrigins }));
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 
 //Upload to Minio Routes
-const uploadRoute = require("./routes/uploadRoutes");
-app.use("/api", uploadRoute);
+// const uploadRoute = require("./routes/uploadRoutes");
+app.use("/api", uploadRoutes);
 
-app.set("trust proxy", 1); // Trust first proxy for secure cookies in production
+// app.set("trust proxy", 1); // Trust first proxy for secure cookies in production
+
+// const redisClient = redis.createClient({
+//   url: process.env.REDIS_URL,
+//   password: process.env.REDIS_PASSWORD,
+//   socket: {
+//     reconnectStrategy: (retries) => Math.min(retries * 50, 3000),
+//   }
+// });
+// redisClient.on("error", (err) => console.error("Redis Client Error", err));
+// await redisClient.connect();
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(
-  session({
-    name: "session_id",
-    secret: process.env.SESSION_SECRET || "session_secret_key",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: process.env.NODE_ENV === "production",
-      httpOnly: true,
-      sameSite: "lax",
-      maxAge: 8 * 60 * 60 * 1000,
-    }, // 8 hours
-  })
-);
+// app.use(
+//   session({
+//     name: "session_id",
+//     secret: process.env.SESSION_SECRET || "session_secret_key",
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//       secure: process.env.NODE_ENV === "production",
+//       httpOnly: true,
+//       sameSite: "lax",
+//       maxAge: 8 * 60 * 60 * 1000,
+//     }, // 8 hours
+//   })
+// );
 
 // Initialize Passport
 app.use(passport.initialize());
@@ -61,12 +79,12 @@ const LOGOUT_CALLBACK_PATH =
 
 //Read certs and keys in as vars bc we are still good devs
 const idpCert = fs.readFileSync(
-  path.resolve("../certs/byu_idp_signing_cert.pem"),
+  path.join(CERT_DIR, "byu_idp_signing_cert.pem"),
   "utf8"
 ); // IdP x509 cert
-const spKey = fs.readFileSync(path.resolve("../certs/SAML_sign_bundle.key"), "utf8"); // SP private key
-const spCert = fs.existsSync(path.resolve("../certs/SAML_sign_bundle.crt"))
-  ? fs.readFileSync(path.resolve("../certs/SAML_sign_bundle.crt"), "utf8") // optional but useful for metadata
+const spKey = fs.readFileSync(path.join(CERT_DIR, "SAML_sign_bundle.key"), "utf8"); // SP private key
+const spCert = fs.existsSync(path.join(CERT_DIR, "SAML_sign_bundle.crt"))
+  ? fs.readFileSync(path.join(CERT_DIR, "SAML_sign_bundle.crt"), "utf8") // optional but useful for metadata
   : null;
 
 const samlStrategy = new SamlStrategy(
@@ -102,6 +120,8 @@ const samlStrategy = new SamlStrategy(
     // The profile contains SAML assertion attributes
     return done(null, {
       id: profile["nameID"],
+      name: profile["nameID"],
+      nameIDFormat: profile["nameIDFormat"],
       // isAdmin: profile['isAdmin'] || false, // Adjust attribute name as per IdP configuration
       attributes: profile,
     });
@@ -134,8 +154,8 @@ app.get("/api/saml/metadata", (req, res) => {
 app.get(
   "/api/auth/login",
   passport.authenticate("saml", {
-    successRedirect: "/admin",
-    failureRedirect: "/login",
+    // successRedirect: "/admin",
+    // failureRedirect: "/login",
   })
 );
 
@@ -163,7 +183,7 @@ app.post(
       const accessToken = authResponse.data.access_token;
       // User is authenticated, fetch additional data from API
       const userId = req.user.id;
-      options = {
+      const options = {
         method: "GET",
         url: `https://api.byu.edu/byuapi/persons/v4/${userId}`,
         headers: {

@@ -1,8 +1,8 @@
-const Course = require("../models/Course");
+import Course from "../models/Course.js";
 
-exports.getCourses = async (req, res) => {
+export async function getCourses(req, res) {
   try {
-    const courses = await Course.find()
+    const courses = await Course.find();
     res.json(courses);
   }
   catch (error) {
@@ -10,7 +10,7 @@ exports.getCourses = async (req, res) => {
   }
 };
 
-exports.getCourse = async (req, res) => {
+export async function getCourse(req, res) {
   try {
     const course = await Course.findById(req.params.id)
     res.json(course);
@@ -21,18 +21,18 @@ exports.getCourse = async (req, res) => {
   }
 };
 
-exports.addCourse = async (req, res) => {
+export async function addCourse(req, res) {
   const course = new Course(req.body);
   await course.save();
   res.status(201).json(course);
 };
 
-exports.updateCourse = async (req, res) => {
+export async function updateCourse(req, res) {
   const updatedCourse = await Course.findByIdAndUpdate(req.params.id, req.body, { new: true });
   res.json(updatedCourse);
 };
 
-exports.deleteCourse = async (req, res) => {
+export async function deleteCourse(req, res) {
   await Course.findByIdAndDelete(req.params.id);
   res.json({ message: "Course deleted" });
 };

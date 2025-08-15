@@ -15,21 +15,47 @@ services:
     networks:
       - app_network
 
+  redis:
+    image: redis:latest
+    container_name: tracks_redis
+    restart: always
+    command: [
+      "redis-server",
+      "--save", "",             # no RDB snapshots (sessions are ephemeral)
+      "--appendonly", "no",     # disable AOF for sessions
+      "--requirepass", "${REDIS_PASSWORD}",
+      "--maxmemory", "256mb",   # cap memory
+      "--maxmemory-policy", "volatile-ttl"  # evict expiring keys first
+    ]
+    # ports:
+    #   - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "PING"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - app_network
+
   api:
     build: ./backend
     container_name: tracks_api
     restart: always
     environment:
       - NODE_ENV=production
+      - CERT_DIR=/app/certs
     env_file:
       - ./backend/.env.production
     depends_on:
       - mongo
       - minio
+      - redis
     ports:
       - "3000:3000"
     networks:
       - app_network
+    volumes:
+      - ./backend/certs:/app/certs:ro
 
   mongo:
     image: mongo:6

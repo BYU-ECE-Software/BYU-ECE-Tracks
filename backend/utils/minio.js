@@ -1,5 +1,7 @@
-const { Client } = require('minio');
-require('dotenv').config();
+import { Client } from 'minio';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const minioClient = new Client({
   endPoint: process.env.MINIO_ENDPOINT,
@@ -16,4 +18,4 @@ async function ensureBucketExists() {
   if (!exists) await minioClient.makeBucket(BUCKET, 'us-west-1');
 }
 
-module.exports = { minioClient, BUCKET, ensureBucketExists };
+export { minioClient, BUCKET, ensureBucketExists };

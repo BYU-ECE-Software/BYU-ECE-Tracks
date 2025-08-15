@@ -1,5 +1,5 @@
-const Course = require("../models/Course");
-const Track = require("../models/Track");
+import Course from "../models/Course.js";
+import Track from "../models/Track.js";
 
 const attachTrackToCourses = async function (doc) {
   const updateCourses = async (courses, trackId) => {
@@ -20,4 +20,4 @@ const removeTrackFromCourses = async function (doc) {
   );
 };
 
-module.exports = { attachTrackToCourses, removeTrackFromCourses };
+export { attachTrackToCourses, removeTrackFromCourses };

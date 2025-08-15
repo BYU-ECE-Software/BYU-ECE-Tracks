@@ -1,5 +1,5 @@
-const express = require("express");
-const { getTracks, getTrack, addTrack, updateTrack, deleteTrack, getTrackByExtension } = require("../controllers/trackController");
+import express from "express";
+import { getTracks, getTrack, addTrack, updateTrack, deleteTrack, getTrackByExtension } from "../controllers/trackController.js";
 
 const router = express.Router();
 
@@ -10,4 +10,4 @@ router.put("/:id", updateTrack);
 router.delete("/:id", deleteTrack);
 router.get("/name/:name", getTrackByExtension);
 
-module.exports = router;
+export default router;
