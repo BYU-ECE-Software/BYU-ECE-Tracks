@@ -9,3 +9,4 @@ backend/.env.production
 backend/certs/
 .env
 frontend/dist/
+certs/
