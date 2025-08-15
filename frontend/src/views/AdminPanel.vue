@@ -39,13 +39,6 @@ const coursesList = ref([]);
 const selectedCourses = ref([]);
 const course = ref({
   name: '',
-  description: '',
-  majors: [],
-  tracks: [],
-  skills: [],
-  relatedCourses: [],
-  offered: '',
-  imageUrl: ''
 });
 const courseDialog = ref(false);
 const courseSubmitted = ref(false);
@@ -294,7 +287,7 @@ const saveTrack = async () => {
     }
 
     trackDialog.value = false;
-    track.value = { extension: "", name: "", description: "", imageUrl: "", primaryCourses: [], optionalCourses: [], companies: [] };
+    track.value = { extension: "", name: "", description: "", imageUrl: "", primaryCourses: [], optionalCourses: [] };
     fetchTracks(); // Refresh course list after saving
   } catch (error) {
     console.error("Error saving course:", error);
