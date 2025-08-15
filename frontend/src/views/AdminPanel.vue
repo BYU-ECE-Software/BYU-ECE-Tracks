@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive, onMounted, watch } from 'vue';
-import { useToast } from 'primevue/usetoast';
+// import { useToast } from 'primevue/usetoast';
 import axios from 'axios';
 
 import Button from 'primevue/button';
@@ -16,7 +16,6 @@ import Card from 'primevue/card'
 import { TabMenu } from 'primevue';
 import MultiSelect from 'primevue/multiselect';
 import FileUpload from 'primevue/fileupload';
-import CourseList from './CourseList.vue';
 
 import { useImageFromMinio } from '@/composables/useImageFromMinio';
 
