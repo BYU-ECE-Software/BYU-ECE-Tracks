@@ -159,13 +159,26 @@ app.get("/api/saml/metadata", (req, res) => {
 });
 
 // SAML Login Route (initiates SSO)
-app.post(
+app.get(
   "/api/auth/login",
   passport.authenticate("saml", {
     // successRedirect: "/admin",
     // failureRedirect: "/login",
-  })
+  }
+)
 );
+//OIT CODE
+// app.get(
+//     '/login/byu-cas-saml',
+//     passport.authenticate("saml", {
+//         failureRedirect: "/",
+//         failureFlash: true
+//     }),
+//     function (req, res) {
+//         res.redirect("/");
+//     },
+// );
+
 
 // SAML Callback Route (handles IdP response)
 app.post(
