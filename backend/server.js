@@ -87,7 +87,7 @@ const idpCert = fs.readFileSync(
 ); // IdP x509 cert
 const spKey = fs.readFileSync(path.join(CERT_DIR, "SAML_sign_bundle.key"), "utf8"); // SP private key
 const spCert = fs.existsSync(path.join(CERT_DIR, "SAML_sign_leaf.crt"))
-  ? fs.readFileSync(path.join(CERT_DIR, "SAML_sign_bundle.crt"), "utf8") // optional but useful for metadata
+  ? fs.readFileSync(path.join(CERT_DIR, "SAML_sign_leaf.crt"), "utf8") // optional but useful for metadata
   : null;
 
   console.log("Path: ", (path.join(CERT_DIR, "SAML_sign_bundle.crt")));
