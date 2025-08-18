@@ -47,12 +47,12 @@ a.white:hover{
   }
 
   h1, h2, h3 {
-    font-family: 'HCo Ringside Narrow SSm', 'Open Sans', Helvetica, Arial, sans-serif;
+    font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
     color: var(--byu-navy);
   }
   
   p {
-    font-family: 'Public Sans', 'Noto Sans', 'Open Sans', Helvetica, Arial, sans-serif;
+    font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
     color: var(--byu-navy);
   }
 }

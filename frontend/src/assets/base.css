@@ -1,6 +1,5 @@
 /* color palette from <https://github.com/vuejs/theme> */
-@import url('https://cdn.byu.edu/theme-fonts/1.x.x/ringside/fonts.css');
-@import url('https://cdn.byu.edu/theme-fonts/1.x.x/public-sans/fonts.css');
+
 :root {
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;
@@ -77,7 +76,7 @@ body {
     color 0.5s,
     background-color 0.5s;
   line-height: 1.6;
-  font-family: 'Public Sans', 'Noto Sans', 'Open Sans', Helvetica, Arial, sans-serif;
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 15px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
