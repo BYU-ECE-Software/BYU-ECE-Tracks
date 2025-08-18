@@ -159,7 +159,7 @@ app.get("/api/saml/metadata", (req, res) => {
 });
 
 // SAML Login Route (initiates SSO)
-app.get(
+app.post(
   "/api/auth/login",
   passport.authenticate("saml", {
     // successRedirect: "/admin",
