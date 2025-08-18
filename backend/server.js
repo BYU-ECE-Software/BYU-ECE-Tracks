@@ -162,10 +162,13 @@ app.get("/api/saml/metadata", (req, res) => {
 app.get(
   "/api/auth/login",
   passport.authenticate("saml", {
-    // successRedirect: "/admin",
-    // failureRedirect: "/login",
+    failureRedirect: "/",
+  }),
+  function (req, res) {
+    res.redirect("/");
   }
-)
+  // successRedirect: "/admin",
+  // failureRedirect: "/login",
 );
 //OIT CODE
 // app.get(
