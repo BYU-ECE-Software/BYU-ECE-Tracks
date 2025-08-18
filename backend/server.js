@@ -155,7 +155,7 @@ function ensureAuthenticated(req, res, next) {
 // SP Metadata
 app.get("/api/saml/metadata", (req, res) => {
   res.type("application/xml");
-  res.send(samlStrategy.generateServiceProviderMetadata(undefined, spCert));
+  res.send(samlStrategy.generateServiceProviderMetadata(spCert, spCert));
 });
 
 // SAML Login Route (initiates SSO)
