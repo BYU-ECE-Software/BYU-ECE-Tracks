@@ -13,7 +13,7 @@ export function useImageFromMinio() {
 
     isLoading.value = true
     try {
-      const res = await fetch(`http://localhost:3000/api/image-url/${imageKey}`)
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URI}/api/image-url/${imageKey}`)
       const data = await res.json()
       imageUrl.value = data.url
     } catch (err) {
