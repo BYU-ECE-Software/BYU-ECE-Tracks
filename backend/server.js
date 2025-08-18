@@ -9,7 +9,7 @@ import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
 import { setupSessions } from "./utils/sessions.js";
-import bodyParser from "body-parser";
+// import bodyParser from "body-parser";
 
 import  courseRoutes from "./routes/courseRoutes.js";
 import  trackRoutes  from "./routes/trackRoutes.js";
@@ -24,7 +24,7 @@ const allowedOrigins = [
   "http://localhost:3000",
 ];
 
-const bodyParser = bodyParser.urlencoded({ extended: false });
+// const bodyParser = bodyParser.urlencoded({ extended: false });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -42,36 +42,6 @@ app.use(cors({ origin: allowedOrigins, credentials: true }));
 //Upload to Minio Routes
 // const uploadRoute = require("./routes/uploadRoutes");
 app.use("/api", uploadRoutes);
-
-// app.set("trust proxy", 1); // Trust first proxy for secure cookies in production
-
-// const redisClient = redis.createClient({
-//   url: process.env.REDIS_URL,
-//   password: process.env.REDIS_PASSWORD,
-//   socket: {
-//     reconnectStrategy: (retries) => Math.min(retries * 50, 3000),
-//   }
-// });
-// redisClient.on("error", (err) => console.error("Redis Client Error", err));
-// await redisClient.connect();
-
-// Middleware
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
-// app.use(
-//   session({
-//     name: "session_id",
-//     secret: process.env.SESSION_SECRET || "session_secret_key",
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: {
-//       secure: process.env.NODE_ENV === "production",
-//       httpOnly: true,
-//       sameSite: "lax",
-//       maxAge: 8 * 60 * 60 * 1000,
-//     }, // 8 hours
-//   })
-// );
 
 // Initialize Passport
 app.use(passport.initialize());
@@ -93,16 +63,11 @@ const spCert = fs.existsSync(path.join(CERT_DIR, "SAML_sign_leaf.crt"))
   ? fs.readFileSync(path.join(CERT_DIR, "SAML_sign_leaf.crt"), "utf8") // optional but useful for metadata
   : null;
 
-  console.log("Path: ", (path.join(CERT_DIR, "SAML_sign_bundle.crt")));
-console.log("Using IdP certificate:", idpCert ? "Loaded" : "Not found");
-console.log("Using SP private key:", spKey ? "Loaded" : "Not found");
-console.log("Using SP certificate:", spCert ? "Loaded" : "Not found");
-
 const samlStrategy = new SamlStrategy(
   {
     //Core
     issuer: `${BASE_URL}`,
-    entryPoint: "https://cas.byu.edu/cas/idp/profile/SAML2/POST/SSO", //Idp SSO URL
+    entryPoint: "https://cas.byu.edu/cas/idp/profile/SAML2/REDIRECT/SSO", //Idp SSO URL
     callbackUrl: `${BASE_URL}${CALLBACK_PATH}`,
     idpCert: idpCert,
     privateKey: spKey,
@@ -119,6 +84,7 @@ const samlStrategy = new SamlStrategy(
     wantAuthnResponseSigned: true, //maybe false?
     validateInResponseTo: "always",
     disableRequestedAuthnContext: false,
+    identifierFormat: 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
     authnContext: [
       "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport",
     ],
@@ -189,7 +155,7 @@ app.get(
 // SAML Callback Route (handles IdP response)
 app.post(
   CALLBACK_PATH,
-  bodyParser.urlencoded({ extended: false }),
+  // bodyParser.urlencoded({ extended: false }),
   passport.authenticate("saml", {
     failureRedirect: "/login",
   }),

@@ -10,3 +10,4 @@ backend/certs/
 .env
 frontend/dist/
 certs/
+PromoPics/
