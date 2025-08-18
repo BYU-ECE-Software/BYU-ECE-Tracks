@@ -9,6 +9,7 @@ import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
 import { setupSessions } from "./utils/sessions.js";
+import bodyParser from "body-parser";
 
 import  courseRoutes from "./routes/courseRoutes.js";
 import  trackRoutes  from "./routes/trackRoutes.js";
@@ -22,6 +23,8 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
 ];
+
+const bodyParser = bodyParser.urlencoded({ extended: false });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -186,6 +189,7 @@ app.get(
 // SAML Callback Route (handles IdP response)
 app.post(
   CALLBACK_PATH,
+  bodyParser.urlencoded({ extended: false }),
   passport.authenticate("saml", {
     failureRedirect: "/login",
   }),
