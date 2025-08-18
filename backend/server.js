@@ -86,7 +86,7 @@ const idpCert = fs.readFileSync(
   "utf8"
 ); // IdP x509 cert
 const spKey = fs.readFileSync(path.join(CERT_DIR, "SAML_sign_bundle.key"), "utf8"); // SP private key
-const spCert = fs.existsSync(path.join(CERT_DIR, "SAML_sign_bundle.crt"))
+const spCert = fs.existsSync(path.join(CERT_DIR, "SAML_sign_leaf.crt"))
   ? fs.readFileSync(path.join(CERT_DIR, "SAML_sign_bundle.crt"), "utf8") // optional but useful for metadata
   : null;
 
@@ -155,7 +155,7 @@ function ensureAuthenticated(req, res, next) {
 // SP Metadata
 app.get("/api/saml/metadata", (req, res) => {
   res.type("application/xml");
-  res.send(samlStrategy.generateServiceProviderMetadata(spCert || null));
+  res.send(samlStrategy.generateServiceProviderMetadata(undefined, spCert));
 });
 
 // SAML Login Route (initiates SSO)
