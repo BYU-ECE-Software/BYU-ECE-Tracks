@@ -9,7 +9,7 @@
             </RouterLink>
         </div>
         <div class="absolute top-4 right-6">
-            <a href="`${import.meta.env.VITE_API_BASE_URI}`/api/auth/login"
+            <a :href="`${import.meta.env.VITE_API_BASE_URI}/api/auth/login`"
                 class="bg-white text-blue-900 font-semibold py-2 px-4 rounded shadow hover:bg-gray-100 transition inline-block">
                 Sign In
             </a>
