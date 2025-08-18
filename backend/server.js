@@ -67,7 +67,7 @@ const samlStrategy = new SamlStrategy(
   {
     //Core
     issuer: `${BASE_URL}`,
-    entryPoint: "https://cas.byu.edu/cas/idp/profile/SAML2/REDIRECT/SSO", //Idp SSO URL
+    entryPoint: "https://cas.byu.edu/cas/idp/profile/SAML2/Redirect/SSO", //Idp SSO URL
     callbackUrl: `${BASE_URL}${CALLBACK_PATH}`,
     idpCert: idpCert,
     privateKey: spKey,
@@ -81,7 +81,7 @@ const samlStrategy = new SamlStrategy(
     signatureAlgorithm: "sha256",
     digestAlgorithm: "sha256",
     wantAssertionsSigned: true,
-    wantAuthnResponseSigned: true, //maybe false?
+    wantAuthnResponseSigned: false, //maybe false?
     validateInResponseTo: "always",
     disableRequestedAuthnContext: false,
     identifierFormat: 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
