@@ -9,21 +9,33 @@
             </RouterLink>
         </div>
         <div class="absolute top-4 right-6">
-            <a :href="loginEndpoint"
+            <button @click="handleLogin"
                 class="bg-white text-blue-900 font-semibold py-2 px-4 rounded shadow hover:bg-gray-100 transition inline-block">
                 Sign In
-            </a>
-
+            </button>
         </div>
     </header>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: "HeaderBar",
 };
 
 const loginEndpoint = `${import.meta.env.VITE_API_BASE_URI}/api/auth/login`;
+
+async function handleLogin() {
+    try {
+        const res = await axios.post(loginEndpoint, null, {
+            withCredentials: true, // if using cookies/session
+        })
+        // You might want to redirect after login
+        window.location.href = res.data.redirectUrl || '/'
+    } catch (err) {
+        console.error('Login failed:', err)
+    }
+}
 </script>
 
 <style scoped>
