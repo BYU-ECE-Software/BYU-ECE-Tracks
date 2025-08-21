@@ -10,7 +10,7 @@
         </div>
         <div class="absolute top-4 right-6">
             <a :href=loginEndpoint
-                target="_blank"
+                
                 class="bg-white text-blue-900 font-semibold py-2 px-4 rounded shadow hover:bg-gray-100 transition inline-block cursor-pointer">
                 Sign In
             </a>
