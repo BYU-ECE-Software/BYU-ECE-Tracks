@@ -84,7 +84,7 @@ const samlStrategy = new SamlStrategy(
     wantAuthnResponseSigned: false, //maybe false?
     validateInResponseTo: "always",
     disableRequestedAuthnContext: false,
-    identifierFormat: 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
+    identifierFormat: 'urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified',
     authnContext: [
       "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport",
     ],
