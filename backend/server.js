@@ -85,9 +85,9 @@ const samlStrategy = new SamlStrategy(
     validateInResponseTo: "always",
     disableRequestedAuthnContext: false,
     identifierFormat: 'urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified',
-    authnContext: [
-      "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport",
-    ],
+    // authnContext: [
+    //   "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport",
+    // ],
 
     // acceptedClockSkewMs: 3000, // 3s skew tolerance
     // forceAuthn: false,
