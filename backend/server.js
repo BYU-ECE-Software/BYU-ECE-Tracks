@@ -80,7 +80,7 @@ const samlStrategy = new SamlStrategy(
     //Security Preferences
     signatureAlgorithm: "sha256",
     digestAlgorithm: "sha256",
-    wantAssertionsSigned: true,
+    wantAssertionsSigned: false,
     wantAuthnResponseSigned: false, //maybe false?
     validateInResponseTo: "always",
     disableRequestedAuthnContext: false,
@@ -96,7 +96,7 @@ const samlStrategy = new SamlStrategy(
     // This function is called after successful authentication
     // The profile contains SAML assertion attributes
     return done(null, {
-      id: profile["nameID"],
+      id: profile["byuId"],
       name: profile["nameID"],
       nameIDFormat: profile["nameIDFormat"],
       // isAdmin: profile['isAdmin'] || false, // Adjust attribute name as per IdP configuration
