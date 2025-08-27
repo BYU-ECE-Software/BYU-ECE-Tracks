@@ -670,7 +670,7 @@ fetchCourses();
         <Card class="p-4">
           <template #title>Upload Image</template>
           <template #content>
-            <FileUpload mode="basic" name="file" :url="`${VITE_API_BASE_URI}/upload`" accept="image/*" auto
+            <FileUpload mode="basic" name="file" url="/api/upload" accept="image/*" auto
               chooseLabel="Upload Image" @upload="onUploadSuccessTrack" />
             <div v-if="imageUrl" class="mt-4">
               <img :src="imageUrl" alt="Uploaded Image" class="max-w-full rounded" />
@@ -746,7 +746,7 @@ fetchCourses();
         <Card class="p-4">
           <template #title>Upload Image</template>
           <template #content>
-            <FileUpload mode="basic" name="file" :url="`${VITE_API_BASE_URI}/upload`" accept="image/*" auto
+            <FileUpload mode="basic" name="file" url="/api/upload" accept="image/*" auto
               chooseLabel="Upload Image" @upload="onUploadSuccessSupertrack" />
             <div v-if="imageUrl" class="mt-4">
               <img :src="imageUrl" alt="Uploaded Image" class="max-w-full rounded" />
