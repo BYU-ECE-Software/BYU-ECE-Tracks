@@ -76,9 +76,15 @@ services:
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
-    ports:
-      - "9000:9000"  # API access
-      - "9001:9001"  # Web console
+      MINIO_SERVER_URL: https://ecetracks.byu.edu/minio
+      MINIO_BROWSER_REDIRECT_URL: https://ecetracks.byu.edu/minio-console
+      MINIO_API_CORS_ALLOW_ORIGIN: https://ecetracks.byu.edu
+      MINIO_API_CORS_ALLOW_METHODS: GET,PUT,POST,HEAD,DELETE
+      MINIO_API_CORS_ALLOW_HEADERS: Authorization,Content-Type,Accept,Origin,Referer,User-Agent,Cache-Control,Content-MD5,x-amz-content-sha256,x-amz-date,x-amz-security-token,x-amz-user-agent,x-amz-acl
+
+    # ports:
+    #   - "9000:9000"  # API access
+    #   - "9001:9001"  # Web console
     volumes:
       - minio_data:/data
     networks:

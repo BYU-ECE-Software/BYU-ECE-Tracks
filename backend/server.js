@@ -83,7 +83,7 @@ const samlStrategy = new SamlStrategy(
     wantAssertionsSigned: false,
     wantAuthnResponseSigned: false, //maybe false?
     validateInResponseTo: "always",
-    disableRequestedAuthnContext: false,
+    disableRequestedAuthnContext: true,
     identifierFormat: 'urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified',
     // authnContext: [
     //   "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport",
