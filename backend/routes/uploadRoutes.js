@@ -33,7 +33,12 @@ router.get('/image-url/:key', async (req, res) => {
   const key = req.params.key;
   try {
     const url = await minioClient.presignedGetObject(BUCKET, key, 60 * 60); // 1 hour
-    res.json({ url });
+    const out = new URL(url);
+    const pub = new URL(process.env.PUBLIC_S3_BASE);
+    out.host = pub.host;
+    out.protocol = pub.protocol;
+    out.pathname = (pub.pathname.replace(/\/$/, '') || '') + out.pathname;
+    res.json({ url: out.toString() });
   } catch (err) {
     console.error('Error generating pre-signed URL:', err);
     res.status(500).json({ error: 'Could not generate image URL' });
