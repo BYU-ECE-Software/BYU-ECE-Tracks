@@ -41,7 +41,6 @@ app.use(cors({ origin: allowedOrigins, credentials: true }));
 
 //Upload to Minio Routes
 // const uploadRoute = require("./routes/uploadRoutes");
-app.use("/api", uploadRoutes);
 
 // Initialize Passport
 app.use(passport.initialize());
@@ -246,6 +245,8 @@ mongoose
 app.use("/api/courses", courseRoutes);
 app.use("/api/tracks", trackRoutes);
 app.use("/api/supertracks", supertrackRoutes);
+app.use("/api", uploadRoutes);
+
 // app.use("/api/auth", authRoutes);
 
 const PORT = process.env.PORT;
