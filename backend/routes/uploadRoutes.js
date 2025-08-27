@@ -6,7 +6,7 @@ import path from 'path';
 
 const router = express.Router();
 const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const upload = multer({ storage, limits: { fileSize: 100 * 1024 * 1024 } }); // 100MB limit
 
 router.post('/upload', upload.single('file'), async (req, res) => {
   try {
