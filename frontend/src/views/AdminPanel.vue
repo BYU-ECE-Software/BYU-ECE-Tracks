@@ -414,7 +414,7 @@ async function fetchImageUrl(imageKey) {
     console.log("No image key provided");
     return "";
   }
-  const res = await fetch(`${VITE_API_BASE_URI}/image-url/${imageKey}`);
+  const res = await fetch(`${import.meta.env.VITE_API_BASE_URI}/image-url/${imageKey}`);
   const data = await res.json();
   return data.url;
 }
