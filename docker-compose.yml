@@ -50,8 +50,8 @@ services:
       - mongo
       - minio
       - redis
-    ports:
-      - "3000:3000"
+    # ports:
+    #   - "3000:3000"
     networks:
       - app_network
     volumes:
