@@ -433,8 +433,8 @@ const onUploadSuccessSupertrack = ({ xhr }) => {
       .catch(err => {
         console.error("Error fetching supertrack image URL:", err);
       });
-    console.log("Supertrack image URL:", supertrack.value.imageKey);
-    loadImageUrl(supertrack.value.imageKey);
+    console.log("Supertrack image URL in OnUpload:", supertrack.value.imageKey);
+    // loadImageUrl(supertrack.value.imageKey);
   }
 const onUploadSuccessTrack = ({ xhr }) => {
     const response = JSON.parse(xhr.response);
@@ -445,13 +445,13 @@ const onUploadSuccessTrack = ({ xhr }) => {
     fetchImageUrl(response.imageKey)
       .then(url => {
         track.value.imageUrl = url;
-        console.log("Track image URL:", track.value.imageUrl);
+        console.log("Track image URL in OnUpload:", track.value.imageUrl);
       })
       .catch(err => {
         console.error("Error fetching track image URL:", err);
       });
     console.log("Track image URL:", track.value.imageKey);
-    loadImageUrl(track.value.imageKey);
+    // loadImageUrl(track.value.imageKey);
   }
 
 
