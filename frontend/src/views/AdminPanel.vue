@@ -287,7 +287,7 @@ const saveTrack = async () => {
     }
 
     trackDialog.value = false;
-    track.value = { extension: "", name: "", description: "", imageUrl: "", primaryCourses: [], optionalCourses: [] };
+    track.value = { extension: "", name: "", description: "", imageUrl: "", imageKey: "", primaryCourses: [], optionalCourses: [] };
     fetchTracks(); // Refresh course list after saving
   } catch (error) {
     console.error("Error saving course:", error);
