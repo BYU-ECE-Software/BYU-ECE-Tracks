@@ -667,7 +667,22 @@ fetchCourses();
           </template>
         </Card>
 
+        <!-- Image URL -->
         <Card class="p-4">
+          <template #title>Image URL</template>
+          <template #content>
+            <InputText id="imageUrl" v-model="supertrack.imageUrl" class="w-full p-2" />
+          </template>
+        </Card>
+        <br>
+
+        <!-- Image Preview -->
+        <div v-if="supertrack.imageUrl" class="flex justify-center">
+          <img :src="supertrack.imageUrl" :alt="supertrack.name" class="rounded-md shadow-md w-48" />
+        </div>
+        <br>
+
+        <!-- <Card class="p-4">
           <template #title>Upload Image</template>
           <template #content>
             <FileUpload mode="basic" name="file" url="/api/upload" accept="image/*" auto
@@ -676,7 +691,7 @@ fetchCourses();
               <img :src="imageUrl" alt="Uploaded Image" class="max-w-full rounded" />
             </div>
           </template>
-        </Card>
+        </Card> -->
 
         <!-- Save & Cancel Buttons -->
         <div class="flex justify-end gap-3">
@@ -729,21 +744,21 @@ fetchCourses();
 
 
         <!-- Image URL -->
-        <!-- <Card class="p-4">
+        <Card class="p-4">
           <template #title>Image URL</template>
           <template #content>
             <InputText id="imageUrl" v-model="supertrack.imageUrl" class="w-full p-2" />
           </template>
         </Card>
-        <br> -->
+        <br>
 
         <!-- Image Preview -->
-        <!-- <div v-if="supertrack.imageUrl" class="flex justify-center">
+        <div v-if="supertrack.imageUrl" class="flex justify-center">
           <img :src="supertrack.imageUrl" :alt="supertrack.name" class="rounded-md shadow-md w-48" />
         </div>
-        <br> -->
+        <br>
 
-        <Card class="p-4">
+        <!-- <Card class="p-4">
           <template #title>Upload Image</template>
           <template #content>
             <FileUpload mode="basic" name="file" url="/api/upload" accept="image/*" auto
@@ -752,7 +767,7 @@ fetchCourses();
               <img :src="imageUrl" alt="Uploaded Image" class="max-w-full rounded" />
             </div>
           </template>
-        </Card>
+        </Card> -->
 
 
         <!-- Save & Cancel Buttons -->

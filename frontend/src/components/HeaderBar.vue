@@ -8,13 +8,13 @@
                 <h1 class="text-2xl font-bold"> | ECE Tracks</h1>
             </RouterLink>
         </div>
-        <div class="absolute top-4 right-6">
+        <!-- <div class="absolute top-4 right-6">
             <a :href=loginEndpoint
                 
                 class="bg-white text-blue-900 font-semibold py-2 px-4 rounded shadow hover:bg-gray-100 transition inline-block cursor-pointer">
                 Sign In
             </a>
-        </div>
+        </div> -->
     </header>
 </template>
 
