@@ -40,19 +40,19 @@ const fetchSupertracks = async () => {
     const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/supertracks`)
     supertracks.value = data
 
-    const loaded = await Promise.all(
-      data.map(async (track) => {
-        const { imageUrl, loadImageUrl } = useImageFromMinio()
-        await loadImageUrl(track.imageKey) // <- using your new pattern
-        console.log('Image URL:', imageUrl.value)
-        return {
-          ...track,
-          imageUrl: imageUrl.value,
-        }
-      })
-    )
+    // const loaded = await Promise.all(
+    //   data.map(async (track) => {
+    //     const { imageUrl, loadImageUrl } = useImageFromMinio()
+    //     await loadImageUrl(track.imageKey) // <- using your new pattern
+    //     console.log('Image URL:', imageUrl.value)
+    //     return {
+    //       ...track,
+    //       imageUrl: imageUrl.value,
+    //     }
+    //   })
+    // )
 
-    supertracksWithUrls.value = loaded
+    // supertracksWithUrls.value = loaded
   } catch (error) {
     console.error('Error fetching supertracks:', error)
   }
