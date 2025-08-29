@@ -21,7 +21,7 @@
     <br>
 
     <!-- Primary Courses -->
-    <h2 class="text-4xl font-bold text-center mb-6">Primary Courses</h2>
+    <!-- <h2 class="text-4xl font-bold text-center mb-6">Primary Courses</h2>
     <div class="place-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       <Card v-for="courseId in track.primaryCourses" :key="courseId" class="track-card w-full h-full cursor-pointer transition hover:shadow-lg">
         <template #content>
@@ -30,12 +30,12 @@
           </div>
         </template>
       </Card>
-    </div>
+    </div> -->
 
     <br>
 
     <!-- Optional Courses -->
-    <h2 class="text-4xl font-bold text-center mb-6">Optional Courses</h2>
+    <!-- <h2 class="text-4xl font-bold text-center mb-6">Optional Courses</h2>
     <div class="place-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       <Card v-for="courseId in track.optionalCourses" :key="courseId" class="track-card w-full h-full cursor-pointer transition hover:shadow-lg">
         <template #content>
@@ -44,7 +44,7 @@
           </div>
         </template>
       </Card>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -53,7 +53,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import Card from 'primevue/card';
 import { useRoute } from 'vue-router';
-import { useImageFromMinio } from '@/composables/useImageFromMinio';
+// import { useImageFromMinio } from '@/composables/useImageFromMinio';
 
 const route = useRoute();
 const track = ref({
@@ -65,24 +65,42 @@ const track = ref({
 });
 
 const courseCache = ref({});
-const { loadImageUrl, imageUrl } = useImageFromMinio();
+// const { loadImageUrl, imageUrl } = useImageFromMinio();
 
 console.log(route.params);
 
+// const fetchTrackDetails = async () => {
+//   try {
+//     const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/tracks/name/${route.params.track}`);
+//     track.value = data;
+
+//     // Load track image from MinIO
+//     if (data.imageKey) {
+//       await loadImageUrl(data.imageKey);
+//       // imageUrl.value = url;
+//     }
+//   } catch (error) {
+//     console.error('Error fetching track details:', error);
+//   }
+// };
+
 const fetchTrackDetails = async () => {
   try {
-    const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/tracks/name/${route.params.track}`);
-    track.value = data;
+    const { data } = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URI}/tracks/name/${route.params.track}`
+    )
 
-    // Load track image from MinIO
-    if (data.imageKey) {
-      await loadImageUrl(data.imageKey);
-      // imageUrl.value = url;
+    // Normalize: ensure we always have an `imageUrl` field
+    track.value = {
+      ...data,
+      imageUrl: data.imageUrl || data.image || data.url || data.image_path || ''
     }
+
   } catch (error) {
-    console.error('Error fetching track details:', error);
+    console.error('Error fetching track details:', error)
   }
-};
+}
+
 
 const getCourseName = (courseId) => {
   if (!courseId) return 'Unknown';

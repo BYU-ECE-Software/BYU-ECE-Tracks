@@ -26,7 +26,7 @@ import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 import Card from "primevue/card";
-import { useImageFromMinio } from "@/composables/useImageFromMinio";
+// import { useImageFromMinio } from "@/composables/useImageFromMinio";
 
 const route = useRoute();
 const router = useRouter();
@@ -35,37 +35,74 @@ const supertrackTitle = ref("");
 const supertrackDescription = ref("");
 const tracksWithUrls = ref([]);
 
+// const fetchSupertrackAndTracks = async () => {
+//   try {
+//     const supertrackExtension = route.params.supertrack;
+
+//     // Fetch the supertrack by name
+//     const { data: supertrack } = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/supertracks/name/${supertrackExtension}`);
+//     console.log(supertrack);
+//     supertrackTitle.value = supertrack.name;
+//     supertrackDescription.value = supertrack.description;
+
+//     // Fetch full track data by ID
+//     const { data: allTracks } = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/tracks`);
+//     const relatedTracks = allTracks.filter((track) => supertrack.tracks.includes(track._id));
+
+//     // Load images
+//     const resolved = await Promise.all(
+//       relatedTracks.map(async (track) => {
+//         const { imageUrl, loadImageUrl } = useImageFromMinio();
+//         await loadImageUrl(track.imageKey);
+//         return {
+//           ...track,
+//           imageUrl: imageUrl.value,
+//         };
+//       })
+//     );
+
+//     tracksWithUrls.value = resolved;
+//   } catch (error) {
+//     console.error("Failed to load supertrack and tracks", error);
+//   }
+// };
+
+// Remove this wherever it exists for this view:
+// import { useImageFromMinio } from '@/composables/useImageFromMinio'
+
 const fetchSupertrackAndTracks = async () => {
   try {
-    const supertrackExtension = route.params.supertrack;
+    const supertrackExtension = route.params.supertrack
 
-    // Fetch the supertrack by name
-    const { data: supertrack } = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/supertracks/name/${supertrackExtension}`);
-    console.log(supertrack);
-    supertrackTitle.value = supertrack.name;
-    supertrackDescription.value = supertrack.description;
+    // 1) Get the supertrack by extension
+    const { data: supertrack } = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URI}/supertracks/name/${supertrackExtension}`
+    )
 
-    // Fetch full track data by ID
-    const { data: allTracks } = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/tracks`);
-    const relatedTracks = allTracks.filter((track) => supertrack.tracks.includes(track._id));
+    supertrackTitle.value = supertrack?.name || ''
+    supertrackDescription.value = supertrack?.description || ''
 
-    // Load images
-    const resolved = await Promise.all(
-      relatedTracks.map(async (track) => {
-        const { imageUrl, loadImageUrl } = useImageFromMinio();
-        await loadImageUrl(track.imageKey);
-        return {
-          ...track,
-          imageUrl: imageUrl.value,
-        };
-      })
-    );
+    // 2) Get all tracks (or consider an API that returns only related ones)
+    const { data: allTracks } = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URI}/tracks`
+    )
 
-    tracksWithUrls.value = resolved;
+    // 3) Filter by IDs on the supertrack
+    const relatedTracks = (Array.isArray(allTracks) ? allTracks : []).filter(t =>
+      (supertrack?.tracks || []).includes(t._id)
+    )
+
+    // 4) Normalize just the DB URL field (no MinIO calls)
+    //    Adjust the fallback chain to match your schema (e.g., image_path, imageURL, thumbnail)
+    tracksWithUrls.value = relatedTracks.map(t => ({
+      ...t,
+      imageUrl: t.imageUrl || t.image || t.url || t.image_path || '' // <- tweak as needed
+    }))
   } catch (error) {
-    console.error("Failed to load supertrack and tracks", error);
+    console.error('Failed to load supertrack and tracks', error)
   }
-};
+}
+
 
 const viewTrack = (track) => {
   console.log(track);
