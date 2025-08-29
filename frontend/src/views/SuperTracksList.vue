@@ -4,7 +4,7 @@
 
     <!-- Grid Layout for Supertracks -->
     <div class="place-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      <Card v-for="supertrack in supertracksWithUrls" :key="supertrack._id" class="supertrack-card w-full h-full cursor-pointer transition hover:shadow-lg" @click="viewSupertrack(supertrack)">
+      <Card v-for="supertrack in supertracks" :key="supertrack._id" class="supertrack-card w-full h-full cursor-pointer transition hover:shadow-lg" @click="viewSupertrack(supertrack)">
         <template #content>
           <div class="flex flex-col items-center">
             <img
@@ -29,30 +29,22 @@ import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import Card from 'primevue/card'
 import { useRouter } from 'vue-router'
-import { useImageFromMinio } from '@/composables/useImageFromMinio'
+// import { useImageFromMinio } from '@/composables/useImageFromMinio'
 
 const router = useRouter()
 const supertracks = ref([])
-const supertracksWithUrls = ref([])
+// const supertracksWithUrls = ref([])
 
 const fetchSupertracks = async () => {
   try {
     const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URI}/supertracks`)
-    supertracks.value = data
 
-    // const loaded = await Promise.all(
-    //   data.map(async (track) => {
-    //     const { imageUrl, loadImageUrl } = useImageFromMinio()
-    //     await loadImageUrl(track.imageKey) // <- using your new pattern
-    //     console.log('Image URL:', imageUrl.value)
-    //     return {
-    //       ...track,
-    //       imageUrl: imageUrl.value,
-    //     }
-    //   })
-    // )
-
-    // supertracksWithUrls.value = loaded
+    // If your DB field is named differently, we normalize it here.
+    // Adjust the fallback chain as needed (e.g., t.image_path).
+    supertracks.value = (Array.isArray(data) ? data : []).map(t => ({
+      ...t,
+      imageUrl: t.imageUrl || t.image || t.url || ''
+    }))
   } catch (error) {
     console.error('Error fetching supertracks:', error)
   }
