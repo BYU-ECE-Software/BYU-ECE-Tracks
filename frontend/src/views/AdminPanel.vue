@@ -671,14 +671,14 @@ fetchCourses();
         <Card class="p-4">
           <template #title>Image URL</template>
           <template #content>
-            <InputText id="imageUrl" v-model="supertrack.imageUrl" class="w-full p-2" />
+            <InputText id="imageUrl" v-model="track.imageUrl" class="w-full p-2" />
           </template>
         </Card>
         <br>
 
         <!-- Image Preview -->
-        <div v-if="supertrack.imageUrl" class="flex justify-center">
-          <img :src="supertrack.imageUrl" :alt="supertrack.name" class="rounded-md shadow-md w-48" />
+        <div v-if="track.imageUrl" class="flex justify-center">
+          <img :src="track.imageUrl" :alt="track.name" class="rounded-md shadow-md w-48" />
         </div>
         <br>
 
