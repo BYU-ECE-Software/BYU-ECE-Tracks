@@ -11,24 +11,27 @@ export const { handlers, signIn, signOut, auth } = ExpressAuth({
     async jwt({ token, user, account }) {
       if (user) {
         token.user = {
-          id: (user as any).id,
-          name: (user as any).name,
-          email: (user as any).email,
+          id: user.id,
+          name: user.name,
+          email: user.email,
         };
         token.accessToken = account?.access_token;
-        token.expiresAt = Number((user as any).expiresAt);
-        token.firstName = (user as any).firstName;
-        token.netId = (user as any).netId;
+        token.expiresAt = Number(user.expiresAt);
+        token.firstName = user.firstName;
+        token.netId = user.netId;
+        token.byuId = user.byuId;
       }
       return token;
     },
 
     async session({ session, token }) {
       // mirror your NextAuth behavior
-      (session as any).user = token.user ?? {};
-      (session as any).user.expiresAt = token.expiresAt as number;
-      (session as any).user.firstName = token.firstName as string;
-      (session as any).user.id = token.netId as string;
+      session.user = token.user ?? {};
+      session.user.expiresAt = token.expiresAt;
+      session.user.firstName = token.firstName;
+      session.user.id = token.netId;
+      session.user.byuId = token.byuId;
+      session.accessToken = token.accessToken;
       return session;
     },
 
@@ -37,7 +40,7 @@ export const { handlers, signIn, signOut, auth } = ExpressAuth({
 
       const urlOrigin = new URL(url).origin;
       const baseOrigin = new URL(baseUrl).origin;
-      const issuerOrigin = new URL(process.env.BYU_ISSUER!).origin;
+      const issuerOrigin = new URL(process.env.BYU_ISSUER).origin;
 
       if (urlOrigin === baseOrigin) return url;
       if (urlOrigin === issuerOrigin) return url;
