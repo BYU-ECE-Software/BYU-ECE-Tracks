@@ -2,8 +2,6 @@ import dotenv from "dotenv"; dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import passport from "passport";
-import { Strategy as SamlStrategy } from "@node-saml/passport-saml";
 import axios from "axios";
 import path from "path";
 import fs from "fs";
@@ -42,10 +40,6 @@ app.use(cors({ origin: allowedOrigins, credentials: true }));
 
 //Upload to Minio Routes
 // const uploadRoute = require("./routes/uploadRoutes");
-
-// Initialize Passport
-app.use(passport.initialize());
-app.use(passport.session());
 
 //Build URL variables bc we are good devs
 const BASE_URL = process.env.BASE_URL || "https://ecetracks.byu.edu";
