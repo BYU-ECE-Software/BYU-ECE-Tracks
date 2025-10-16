@@ -9,14 +9,15 @@ import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
 import { setupSessions } from "./utils/sessions.js";
+import { ExpressAuth } from "@auth/express";
 // import bodyParser from "body-parser";
 
 import  courseRoutes from "./routes/courseRoutes.js";
 import  trackRoutes  from "./routes/trackRoutes.js";
 import  supertrackRoutes  from "./routes/supertrackRoutes.js";
 import  uploadRoutes from "./routes/uploadRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
-// const authRoutes = require("./routes/authRoutes");
 
 const allowedOrigins = [
   "https://ecetracks.byu.edu",
@@ -246,6 +247,7 @@ app.use("/api/courses", courseRoutes);
 app.use("/api/tracks", trackRoutes);
 app.use("/api/supertracks", supertrackRoutes);
 app.use("/api", uploadRoutes);
+app.use("/api/auth", authRoutes);
 
 // app.use("/api/auth", authRoutes);
 

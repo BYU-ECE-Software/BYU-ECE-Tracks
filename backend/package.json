@@ -11,6 +11,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@auth/express": "^0.12.0",
     "@node-saml/passport-saml": "^5.1.0",
     "axios": "^1.11.0",
     "body-parser": "^2.2.0",
