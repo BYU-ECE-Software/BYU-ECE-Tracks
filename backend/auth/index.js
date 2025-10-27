@@ -1,7 +1,7 @@
 import { ExpressAuth } from "@auth/express";
-import BYUPKCE from "./byu-provider";
+import BYUPKCE from "./byu-provider.js";
 
-export const { handlers, signIn, signOut, auth } = ExpressAuth({
+export const authMiddleware = ExpressAuth({
   // REQUIRED for Auth.js (set AUTH_SECRET in .env)
   secret: process.env.AUTH_SECRET,
 

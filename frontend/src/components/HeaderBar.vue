@@ -55,6 +55,7 @@ async function fetchSession() {
     const res = await fetch(`${API_BASE}/auth/session`, {
       credentials: "include",
     });
+    console.log("User session:", res.user);
     if (res.ok) {
       const data = await res.json();
       user.value = data?.user || null;
@@ -68,7 +69,9 @@ async function fetchSession() {
 }
 
 async function login() {
-  window.location.href = `${API_BASE}/auth/login?callbackUrl=${encodeURIComponent(window.location.origin)}`;
+  console.log(import.meta.env);
+  // window.location.href = `${import.meta.env.VITE_BYU_API_BASE}/authorize?response_type=code&client_id=${import.meta.env.VITE_CLIENT_ID}&redirect_uri=${import.meta.env.VITE_REDIRECT_URI}&scope=openid&state=myteststate`;
+  window.location.href = `api/auth/login`;
 }
 
 async function logout() {
